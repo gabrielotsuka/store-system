@@ -1,0 +1,6 @@
+com/br/github/gabrielotsuka/storesystem/controllers/IndexController.class
+com/br/github/gabrielotsuka/storesystem/controllers/ProductController.class
+com/br/github/gabrielotsuka/storesystem/models/Product.class
+com/br/github/gabrielotsuka/storesystem/controllers/ClientController.class
+com/br/github/gabrielotsuka/storesystem/models/Client.class
+com/br/github/gabrielotsuka/storesystem/StoreSystemApplication.class
