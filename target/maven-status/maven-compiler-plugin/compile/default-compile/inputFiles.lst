@@ -1,6 +1,2 @@
-/home/otsuka/Workspace/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/controllers/ClientController.java
-/home/otsuka/Workspace/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/controllers/IndexController.java
-/home/otsuka/Workspace/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/models/Client.java
-/home/otsuka/Workspace/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/models/Product.java
-/home/otsuka/Workspace/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/StoreSystemApplication.java
-/home/otsuka/Workspace/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/controllers/ProductController.java
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/StoreSystemApplication.java
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/controllers/PrimaryController.java
