@@ -39,17 +39,37 @@
 	                        class="oi oi-home"></i> <span>Home</span>
 	                </a></li>
 	            </ul>
-	            <ul class="nav nav-pills">
-	                <li class="nav-item"><span class="nav-link active">Employees</span></li>
-	                <li class="nav-item"><a class="nav-link"
-	                                        href="/admin/users/register"> <i class="oi oi-plus"></i>
-	                    <span>New </span>
-	                </a></li>
-	                <li class="nav-item"><a class="nav-link"
-	                                        href="/admin/users/list"> <i class="oi oi-spreadsheet"></i>
-	                    <span>List </span>
-	                </a></li>
-	            </ul>
+				<ul class="nav nav-pills">
+					<li class	="nav-item"><span class="nav-link active">Employees</span></li>
+					<li class="nav-item"><a class="nav-link"
+											href="/admin/employees/register"> <i class="oi oi-plus"></i>
+						<span>New </span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+											href="/admin/employees/list"> <i class="oi oi-spreadsheet"></i>
+						<span>List </span>
+					</a></li>
+				</ul>
+				<ul class="nav nav-pills">
+					<li class="nav-item"><span class="nav-link active">Clients</span></li>
+					<li class="nav-item"><a class="nav-link"
+											href="admin/clients/register"> <i class="oi oi-plus"></i>
+						<span>New </span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+											href="admin/clients/list"> <i class="oi oi-spreadsheet"></i> <span>List </span>
+					</a></li>
+				</ul>
+				<ul class="nav nav-pills">
+					<li class="nav-item"><span class="nav-link active">Products</span></li>
+					<li class="nav-item"><a class="nav-link"
+											href="admin/employees/register"> <i class="oi oi-plus"></i>
+						<span>New </span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link"
+											href="admin/employees/list"> <i class="oi oi-spreadsheet"></i> <span>List </span>
+					</a></li>
+				</ul>
 	        </nav>
 	    </aside>
 	
@@ -64,7 +84,7 @@
 	                        </li>
 	                    </ul>
 	                </div>
-	                <a class="btn btn-primary btn-md" href="/employees/list" role="button">
+	                <a class="btn btn-primary btn-md" href="admin/employees/list" role="button">
 	                    <span class="oi oi-spreadsheet" title="Register" aria-hidden="true"></span>
 	                    <span>List Employees</span>
 	                </a>
@@ -72,7 +92,7 @@
 	        </div>
 	
 	        <div class="container" id="cadastro">
-	            <form action="/admin/users/register" method="POST">
+	            <form action="/admin/employees/register" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="name">Employee Name</label>

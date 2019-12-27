@@ -15,23 +15,20 @@ public class EmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @RequestMapping(value = "admin/users/register", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/employees/register", method = RequestMethod.GET)
     public String form() {
-        return "admin/users/register";
+        return "admin/employees/register";
     }
 
-    @RequestMapping(value = "admin/users/register", method = RequestMethod.POST)
+    @RequestMapping(value = "admin/employees/register", method = RequestMethod.POST)
     public String form(Employee employee){
         employeeRepository.save(employee);
-        return "redirect:/admin/users/register";
+        return "redirect:/admin/employees/register";
     }
 
-    @RequestMapping("admin/users/list")
-    public ModelAndView listEmployees() {
-        ModelAndView mv=new ModelAndView("admin/users/list");
-        Iterable<Employee> listEmployees = employeeRepository.findAll();
-        mv.addObject("employee", listEmployees);
-        return mv;
+    @RequestMapping(value = "admin/employees/list",method = RequestMethod.GET)
+    public String list() {
+        return "admin/employees/list";
     }
 
 }
