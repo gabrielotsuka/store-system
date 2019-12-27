@@ -108,7 +108,8 @@
 							<td th:text="${employee.email}"></td>
 							<td th:text="${employee.init_date}"></td>
 							<td colspan="2">
-								<a class="btn btn-info btn-sm" href="/funcionarios/editar/1" role="button">
+								<a class="btn btn-info btn-sm"
+								   th:href="@{edit/{email}(email=${employee.email})}" role="button">
 									<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 								</a>
 								<button id="btn_funcionarios/excluir/1" type="button" class="btn btn-danger btn-sm"
