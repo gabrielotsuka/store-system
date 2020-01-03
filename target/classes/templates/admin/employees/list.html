@@ -65,11 +65,11 @@
 			<ul class="nav nav-pills">
 				<li class="nav-item"><span class="nav-link active">Products</span></li>
 				<li class="nav-item"><a class="nav-link"
-										href="admin/employees/register"> <i class="oi oi-plus"></i>
+										href="/admin/products/register"> <i class="oi oi-plus"></i>
 					<span>New </span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link"
-										href="admin/employees/list"> <i class="oi oi-spreadsheet"></i> <span>List </span>
+										href="/admin/products/list"> <i class="oi oi-spreadsheet"></i> <span>List </span>
 				</a></li>
 			</ul>
 		</nav>
@@ -109,13 +109,13 @@
 							<td th:text="${employee.init_date}"></td>
 							<td colspan="2">
 								<a class="btn btn-info btn-sm"
-								   th:href="@{edit/{email}(email=${employee.email})}" role="button">
+								   th:href="@{/admin/employees/edit/{email}(email=${employee.email})}" role="button">
 									<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 								</a>
-								<button id="btn_funcionarios/excluir/1" type="button" class="btn btn-danger btn-sm"
-										data-toggle="modal" data-target="#myModal">
-									<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
-								</button>
+								<a class="btn btn-info btn-sm"
+								   th:href="@{/admin/employees/remove/{email}(email=${employee.email})}" role="button">
+									<span class="oi oi-circle-x" title="Remover" aria-hidden="true"></span>
+								</a>
 							</td>
 						</tr>
 

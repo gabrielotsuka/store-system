@@ -1,2 +1,8 @@
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/repositories/ProductRepository.java
 /home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/StoreSystemApplication.java
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/repositories/EmployeeRepository.java
 /home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/controllers/PrimaryController.java
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/models/Employee.java
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/controllers/EmployeeController.java
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/models/Product.java
+/home/otsuka/Documents/store-system/src/main/java/com/br/github/gabrielotsuka/storesystem/controllers/ProductController.java

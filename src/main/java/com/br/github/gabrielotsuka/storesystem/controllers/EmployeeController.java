@@ -42,9 +42,16 @@ public class EmployeeController {
     }
 
     @GetMapping("admin/employees/edit/{email}")
-    public ModelAndView edit(@PathVariable("email") String email){
+    public ModelAndView edit(@PathVariable("email") String email) {
         Optional<Employee> employee = employeeRepository.findById(email);
         return register(employee.get());
+    }
+
+    @GetMapping("admin/employees/remove/{email}")
+    public ModelAndView remove(@PathVariable("email") String email){
+        Optional<Employee> employee = employeeRepository.findById(email);
+        employeeRepository.delete(employee.get());
+        return list();
     }
 
 }
