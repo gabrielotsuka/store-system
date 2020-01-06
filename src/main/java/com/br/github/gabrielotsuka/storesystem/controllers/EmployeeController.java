@@ -2,6 +2,7 @@ package com.br.github.gabrielotsuka.storesystem.controllers;
 
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import com.br.github.gabrielotsuka.storesystem.repositories.EmployeeRepository;
+import com.br.github.gabrielotsuka.storesystem.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,39 +19,34 @@ public class EmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @GetMapping("/admin/employees/register")
     public ModelAndView register(Employee employee){
-        ModelAndView mv = new ModelAndView(("admin/employees/register"));
-        mv.addObject("employee", employee);
-        return mv;
-    }
-
-    @GetMapping("/admin/employees/list")
-    public ModelAndView list() {
-        ModelAndView mv = new ModelAndView("admin/employees/list");
-        mv.addObject("listEmployees", employeeRepository.findAll());
-        return mv;
+        return employeeService.register("admin/employees/register", employee);
     }
 
     @PostMapping("admin/employees/save")
     public ModelAndView save(@Valid Employee employee, BindingResult result){
-        if(result.hasErrors()){
-            return register(employee);
-        }
-        employeeRepository.saveAndFlush(employee);
-        return register(new Employee());
+        employeeService.save(employee, result);
+        return list();
     }
 
-    @GetMapping("admin/employees/edit/{email}")
-    public ModelAndView edit(@PathVariable("email") String email) {
-        Optional<Employee> employee = employeeRepository.findById(email);
+    @GetMapping("/admin/employees/list")
+    public ModelAndView list() {
+        return employeeService.list("admin/employees/list");
+    }
+
+    @GetMapping("admin/employees/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
         return register(employee.get());
     }
 
-    @GetMapping("admin/employees/remove/{email}")
-    public ModelAndView remove(@PathVariable("email") String email){
-        Optional<Employee> employee = employeeRepository.findById(email);
-        employeeRepository.delete(employee.get());
+    @GetMapping("admin/employees/remove/{id}")
+    public ModelAndView remove(@PathVariable("id") Long id){
+        employeeService.remove(id);
         return list();
     }
 

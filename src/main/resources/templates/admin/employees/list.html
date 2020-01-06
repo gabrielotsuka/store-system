@@ -96,6 +96,7 @@
 				<table class="table table-striped table-hover table-sm">
 					<thead>
 						<tr>
+							<th>#</th>
 							<th>Name</th>
 							<th>Email</th>
 							<th>Entry Date</th>
@@ -104,21 +105,21 @@
 					</thead>
 					<tbody>
 						<tr th:each="employee : ${listEmployees}">
+							<td th:text="${employee.id}"></td>
 							<td th:text="${employee.name}"></td>
 							<td th:text="${employee.email}"></td>
 							<td th:text="${employee.init_date}"></td>
 							<td colspan="2">
 								<a class="btn btn-info btn-sm"
-								   th:href="@{/admin/employees/edit/{email}(email=${employee.email})}" role="button">
+								   th:href="@{/admin/employees/edit/{id}(id=${employee.id})}" role="button">
 									<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 								</a>
 								<a class="btn btn-info btn-sm"
-								   th:href="@{/admin/employees/remove/{email}(email=${employee.email})}" role="button">
+								   th:href="@{/admin/employees/remove/{id}(id=${employee.id})}" role="button">
 									<span class="oi oi-circle-x" title="Remover" aria-hidden="true"></span>
 								</a>
 							</td>
 						</tr>
-
 					</tbody>
 				</table>
 			</div>
