@@ -2,6 +2,7 @@ com/br/github/gabrielotsuka/storesystem/controllers/ProductController.class
 com/br/github/gabrielotsuka/storesystem/StoreSystemApplication.class
 com/br/github/gabrielotsuka/storesystem/repositories/ProductRepository.class
 com/br/github/gabrielotsuka/storesystem/controllers/PrimaryController.class
+com/br/github/gabrielotsuka/storesystem/services/EmployeeService.class
 com/br/github/gabrielotsuka/storesystem/models/Employee.class
 com/br/github/gabrielotsuka/storesystem/models/Product.class
 com/br/github/gabrielotsuka/storesystem/repositories/EmployeeRepository.class

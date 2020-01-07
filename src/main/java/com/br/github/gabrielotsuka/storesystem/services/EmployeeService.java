@@ -1,6 +1,5 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
-import com.br.github.gabrielotsuka.storesystem.controllers.EmployeeController;
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import com.br.github.gabrielotsuka.storesystem.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-
-    private EmployeeController employeeController;
 
     public ModelAndView register(String endpoint, Employee employee){
         ModelAndView mv = new ModelAndView((endpoint));
