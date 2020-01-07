@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import javax.validation.Valid;
+
 import java.util.Optional;
 
 @Service
@@ -24,11 +24,11 @@ public class EmployeeService {
         return mv;
     }
 
-    public void save(@Valid Employee employee, BindingResult result){
+    public Employee save(Employee employee, BindingResult result){
         if(result.hasErrors())
-            employeeController.register(employee);
+           return employee;
         employeeRepository.saveAndFlush(employee);
-        employeeController.register(new Employee());
+        return new Employee();
     }
 
     public ModelAndView list(String endpoint){
@@ -40,6 +40,11 @@ public class EmployeeService {
     public void remove(Long id){
         Optional<Employee> employee = employeeRepository.findById(id);
         employeeRepository.delete(employee.get());
+    }
+
+    public Employee edit(Long id){
+        Optional<Employee> employee = employeeRepository.findById(id);
+        return employee.get();
     }
 
 }

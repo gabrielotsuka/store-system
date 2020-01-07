@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	  xmls:th="http://thymeleaf.org"
+	  xmls:layout="http://www.ultraq.net/thymeleaf/layout">
 <head>
     <title>Store System</title>
     <meta charset="UTF-8"/>
@@ -94,18 +96,18 @@
 	        </div>
 	
 	        <div class="container" id="cadastro">
-	            <form action="/admin/employees/save" method="POST">
+	            <form action="/admin/employees/save" th:object="${employee}" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="name">Employee Name</label>
 	                        <input type="text" class="form-control" id="name" placeholder="Full Name"
-	                               autofocus="autofocus" name="name" value=""/>
+	                               autofocus="autofocus" th:field="*{name}" value=""/>
 	                        <div class="invalid-feedback">
 	                        </div>
 	                    </div>
 						<div class="form-group col-md-6">
 							<label for="init_date">Entry Date</label>
-							<input type="date" class="form-control" id="init_date" name="init_date" value=""/>
+							<input type="date" class="form-control" id="init_date" th:field="*{init_date}" value=""/>
 							<div class="invalid-feedback">
 							</div>
 						</div>
@@ -114,13 +116,13 @@
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="email">Email</label>
-	                        <input type="string" class="form-control" id="email" name="email" value=""
+	                        <input type="string" class="form-control" id="email" th:field="*{email}" value=""
 								   placeholder="sample@email.com"/>
 	                        <div class="invalid-feedback">
 	                        </div>
 	                    </div>
 					</div>
-	                <input type="hidden" id="id" name="id" value=""/>
+	                <input type="hidden" id="id" th:field="*{id}" value=""/>
 	                <button type="submit" class="btn btn-primary btn-sm">Save</button>
 	            </form>
 	        </div>

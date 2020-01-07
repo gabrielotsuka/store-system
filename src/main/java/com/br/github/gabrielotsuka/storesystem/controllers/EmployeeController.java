@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.Optional;
 
-
 @Controller
 public class EmployeeController {
 
@@ -29,8 +28,7 @@ public class EmployeeController {
 
     @PostMapping("admin/employees/save")
     public ModelAndView save(@Valid Employee employee, BindingResult result){
-        employeeService.save(employee, result);
-        return list();
+        return register(employeeService.save(employee, result));
     }
 
     @GetMapping("/admin/employees/list")
@@ -40,8 +38,7 @@ public class EmployeeController {
 
     @GetMapping("admin/employees/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
-        Optional<Employee> employee = employeeRepository.findById(id);
-        return register(employee.get());
+        return register(employeeService.edit(id));
     }
 
     @GetMapping("admin/employees/remove/{id}")
