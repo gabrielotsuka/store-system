@@ -1,5 +1,6 @@
 package com.br.github.gabrielotsuka.storesystem.controllers;
 
+import com.br.github.gabrielotsuka.storesystem.controllers.request.EmployeeRequest;
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import com.br.github.gabrielotsuka.storesystem.repositories.EmployeeRepository;
 import com.br.github.gabrielotsuka.storesystem.services.EmployeeService;
@@ -19,13 +20,13 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/admin/employees/register")
-    public ModelAndView register(Employee employee){
+    public ModelAndView register(EmployeeRequest employee){
         return employeeService.register("admin/employees/register", employee);
     }
 
     @PostMapping("admin/employees/save")
-    public ModelAndView save(@Valid Employee employee, BindingResult result){
-        return register(employeeService.save(employee, result));
+    public ModelAndView save(@Valid EmployeeRequest employeeRequest, BindingResult result){
+        return register(employeeService.save(employeeRequest, result));
     }
 
     @GetMapping("/admin/employees/list")

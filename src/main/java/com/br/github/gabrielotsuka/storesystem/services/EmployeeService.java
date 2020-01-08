@@ -1,5 +1,6 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
+import com.br.github.gabrielotsuka.storesystem.controllers.request.EmployeeRequest;
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import com.br.github.gabrielotsuka.storesystem.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,18 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public ModelAndView register(String endpoint, Employee employee){
+    public ModelAndView register(String endpoint, EmployeeRequest employee){
         ModelAndView mv = new ModelAndView((endpoint));
         mv.addObject("employee", employee);
         return mv;
     }
 
-    public Employee save(Employee employee, BindingResult result){
+    public EmployeeRequest save(EmployeeRequest request, BindingResult result){
+        Employee employee = new Employee(request.getName(), request.getInit_date(), request.getEmail());
         if(result.hasErrors())
-           return employee;
+           return request;
         employeeRepository.saveAndFlush(employee);
-        return new Employee();
+        return new EmployeeRequest();
     }
 
     public ModelAndView list(String endpoint){
@@ -39,9 +41,12 @@ public class EmployeeService {
         employeeRepository.delete(employee.get());
     }
 
-    public Employee edit(Long id){
+    public EmployeeRequest edit(Long id){
         Optional<Employee> employee = employeeRepository.findById(id);
-        return employee.get();
+        Employee em = employee.get();
+        EmployeeRequest request = new EmployeeRequest();
+        request.setName(em.getName());
+        return request;
     }
 
 }
