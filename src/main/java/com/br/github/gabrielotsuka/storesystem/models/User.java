@@ -1,11 +1,13 @@
 package com.br.github.gabrielotsuka.storesystem.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
+@Table(
+        name = "user",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})}
+)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

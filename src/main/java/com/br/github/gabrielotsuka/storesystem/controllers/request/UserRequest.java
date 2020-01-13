@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 public class    UserRequest {
 //    @Pattern(regexp = "[A-Z, a-z]", message = "There can't be special chars or numbers in name field")
-    @NotBlank(message = "{name.not.blank}")
+    @NotBlank(message = "{name.not.blank}") 
     private String name;
     @NotBlank(message = "{email.not.blank}")
     @Email(message = "{email.not.valid}")
