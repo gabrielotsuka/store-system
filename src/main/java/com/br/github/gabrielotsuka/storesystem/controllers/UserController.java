@@ -18,18 +18,33 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest dto){
-        User user1 = userService.save(dto.toUser());
-        return new ResponseEntity<>(UserResponse.toResponse(user1), HttpStatus.CREATED);
+    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest dto) {
+        return userService.save(dto.toUser());
     }
 
     @GetMapping
-    public List<UserResponse> getUsers(){
+    public List<UserResponse> getUsers() {
         return userService.getUsers();
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable(value = "id") Long id) {
+        return userService.getUserById(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserResponse> editUser(@PathVariable(value = "id") Long id,
+                                                 @Valid @RequestBody UserRequest newUser){
+        return userService.editUser(id, newUser.toUser());
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") Long id){
+        return userService.deleteUser(id);
     }
 }

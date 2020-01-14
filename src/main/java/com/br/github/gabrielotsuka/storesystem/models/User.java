@@ -45,4 +45,24 @@ public class User {
     public boolean isAdmin() {
         return admin;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 }
