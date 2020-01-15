@@ -1,11 +1,11 @@
 package com.br.github.gabrielotsuka.storesystem.controllers.request;
 
-import com.br.github.gabrielotsuka.storesystem.models.User;
+import com.br.github.gabrielotsuka.storesystem.models.Employee;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class    UserRequest {
+public class EmployeeRequest {
     @NotBlank
     private String name;
     @NotBlank
@@ -14,8 +14,8 @@ public class    UserRequest {
     @NotBlank
     private String pwd;
 
-    public User toUser(){
-        return new User(name,email,pwd);
+    public Employee toUser(){
+        return new Employee(name,email,pwd);
     }
 
     public String getName() {

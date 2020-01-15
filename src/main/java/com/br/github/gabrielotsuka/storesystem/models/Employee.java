@@ -5,25 +5,24 @@ import java.util.Objects;
 
 @Entity
 @Table(
-        name = "user",
+        name = "employee",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})}
 )
-public class User {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private String pwd;
-    private boolean admin = false;
 
-    public User(String name, String email, String pwd) {
+    public Employee(String name, String email, String pwd) {
         this.name = name;
         this.email = email;
         this.pwd = pwd;
     }
 
-    public User() {
+    public Employee() {
     }
 
     public Long getId() {
@@ -42,10 +41,6 @@ public class User {
         return pwd;
     }
 
-    public boolean isAdmin() {
-        return admin;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -62,7 +57,4 @@ public class User {
         this.pwd = pwd;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
 }
