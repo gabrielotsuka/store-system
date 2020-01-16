@@ -14,7 +14,7 @@ public class EmployeeRequest {
     @NotBlank
     private String pwd;
 
-    public Employee toUser(){
+    public Employee toEmployee(){
         return new Employee(name,email,pwd);
     }
 

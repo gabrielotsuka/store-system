@@ -11,38 +11,39 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/employee")
 public class EmployeeController {
-    private final EmployeeService employeeService;
 
+    private final EmployeeService employeeService;
     @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
-    @PostMapping(value = "/employee")
-    public ResponseEntity<EmployeeResponse> save(@RequestBody @Valid EmployeeRequest dto) {
-        return employeeService.save(dto.toUser());
+    @PostMapping
+    public ResponseEntity<EmployeeResponse> save(@RequestBody @Valid EmployeeRequest employee) {
+        return employeeService.save(employee.toEmployee());
     }
 
-    @GetMapping(value = "/employee")
-    public List<EmployeeResponse> getUsers() {
-        return employeeService.getUsers();
+    @GetMapping
+    public List<EmployeeResponse> getEmployees() {
+        return employeeService.getEmployees();
     }
 
-    @GetMapping(value = "employee/{id}")
-    public ResponseEntity<EmployeeResponse> getUserById(@PathVariable(value = "id") Long id) {
-        return employeeService.getUserById(id);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<EmployeeResponse> getEmployeeById
+            (@PathVariable(value = "id") Long id) {
+        return employeeService.getEmployeeById(id);
     }
 
-    @PutMapping(value = "employee/{id}")
-    public ResponseEntity<EmployeeResponse> editUser(@PathVariable(value = "id") Long id,
-                                                     @Valid @RequestBody EmployeeRequest newUser){
-        return employeeService.editUser(id, newUser.toUser());
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<EmployeeResponse> editEmployee(@PathVariable(value = "id") Long id,
+                                                         @Valid @RequestBody EmployeeRequest newUser){
+        return employeeService.editEmployee(id, newUser.toEmployee());
     }
 
-    @DeleteMapping(value = "employee/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") Long id){
-        return employeeService.deleteUser(id);
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") Long id){
+        return employeeService.deleteEmployee(id);
     }
 }
