@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "productId")
     private Long id;
     private String name;
     private Double price;

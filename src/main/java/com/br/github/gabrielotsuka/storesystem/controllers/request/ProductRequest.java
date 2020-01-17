@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class ProductRequest {
     @NotBlank
     private String name;
-    @DecimalMax("10.0") @DecimalMin("0.0")
+    @DecimalMin("0.0")
     private Double price;
     @Range(min = 0)
     private int quantity;

@@ -21,7 +21,7 @@ public class ProductService {
 
     public ResponseEntity<Product> save(Product product){
         productRepository.save(product);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     public List<Product> getProducts(){

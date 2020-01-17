@@ -2,7 +2,6 @@ package com.br.github.gabrielotsuka.storesystem.services;
 
 import com.br.github.gabrielotsuka.storesystem.controllers.response.EmployeeResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
-import com.br.github.gabrielotsuka.storesystem.handler.RestExceptionHandler;
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import com.br.github.gabrielotsuka.storesystem.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +30,7 @@ public class EmployeeService {
     public List<EmployeeResponse> getEmployees(){
         List<Employee> arr = employeeRepository.findAll();
         List<EmployeeResponse> response = new ArrayList<>();
-        arr.forEach(temp -> {
-            response.add(EmployeeResponse.toResponse(temp));
-        });
+        arr.forEach(temp -> response.add(EmployeeResponse.toResponse(temp)));
         return response;
     }
 
@@ -61,7 +57,7 @@ public class EmployeeService {
     private Employee verifyEmployeeExistence(Long id){
         Optional<Employee> user = employeeRepository.findById(id);
         if(!user.isPresent())
-            throw new ResourceNotFoundException("User not found. ID: "+id);
+            throw new ResourceNotFoundException("Employee not found. ID: "+id);
         else
             return user.get();
     }
