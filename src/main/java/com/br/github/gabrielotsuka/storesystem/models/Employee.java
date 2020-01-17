@@ -23,6 +23,7 @@ public class Employee {
     }
 
     public Employee() {
+        super();
     }
 
     public Long getId() {

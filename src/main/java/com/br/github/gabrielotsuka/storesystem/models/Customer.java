@@ -4,29 +4,30 @@ import javax.persistence.*;
 import java.util.List;
 
 @Table(
-        name = "client",
+        name = "customer",
         uniqueConstraints = {@UniqueConstraint(columnNames = "email")}
 )
 @Entity
-public class Client {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "clientId")
+    @Column(name = "customerId")
     private Long id;
     private String name;
     private String email;
     private String pwd;
     @OneToMany
-    @JoinColumn(name = "clientId", referencedColumnName = "clientId")
+    @JoinColumn(name = "customerId", referencedColumnName = "customerId")
     private List<Product> cart;
 
-    public Client(String name, String email, String pwd) {
+    public Customer(String name, String email, String pwd) {
         this.name = name;
         this.email = email;
         this.pwd = pwd;
     }
 
-    public Client() {
+    public Customer() {
+        super();
     }
 
     public Long getId() {

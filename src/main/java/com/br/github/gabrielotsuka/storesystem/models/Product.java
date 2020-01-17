@@ -23,6 +23,7 @@ public class Product {
     }
 
     public Product() {
+        super();
     }
 
     public Long getId() {
