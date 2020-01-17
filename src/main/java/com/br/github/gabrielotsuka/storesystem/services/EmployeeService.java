@@ -43,7 +43,6 @@ public class EmployeeService {
         Employee employee = verifyEmployeeExistence(id);
         employee.setName(newEmployee.getName());
         employee.setEmail(newEmployee.getEmail());
-        employee.setPwd(newEmployee.getPwd());
         employeeRepository.save(employee);
         return new ResponseEntity<EmployeeResponse>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
     }

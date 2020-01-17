@@ -45,7 +45,6 @@ public class CustomerService {
         Customer oldCustomer = verifyCustomerExistence(id);
         oldCustomer.setEmail(newCustomer.getEmail());
         oldCustomer.setName(newCustomer.getName());
-        oldCustomer.setPwd(newCustomer.getPwd());
         customerRepository.save(oldCustomer);
         return new ResponseEntity<CustomerResponse>(CustomerResponse.toResponse(oldCustomer), HttpStatus.OK);
     }
