@@ -1,8 +1,42 @@
 package com.br.github.gabrielotsuka.storesystem.error;
 
-public class ValidationErrorDetails extends ErrorDetails {
+public class ValidationErrorDetails {
+    private String title;
+    private int status;
     private String field;
     private String fieldMessage;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public String getFieldMessage() {
+        return fieldMessage;
+    }
+
+    public void setFieldMessage(String fieldMessage) {
+        this.fieldMessage = fieldMessage;
+    }
 
     public static final class Builder {
         private String title;
@@ -41,8 +75,8 @@ public class ValidationErrorDetails extends ErrorDetails {
             ValidationErrorDetails validationErrorDetails = new ValidationErrorDetails();
             validationErrorDetails.setTitle(title);
             validationErrorDetails.setStatus(status);
-            validationErrorDetails.fieldMessage = this.fieldMessage;
-            validationErrorDetails.field = this.field;
+            validationErrorDetails.setField(field);
+            validationErrorDetails.setFieldMessage(fieldMessage);
             return validationErrorDetails;
         }
     }

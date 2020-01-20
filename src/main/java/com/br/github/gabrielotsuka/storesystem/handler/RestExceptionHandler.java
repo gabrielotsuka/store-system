@@ -4,6 +4,7 @@ import com.br.github.gabrielotsuka.storesystem.error.ConstraintViolationExceptio
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundDetails;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.error.ValidationErrorDetails;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,12 +44,12 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException (ConstraintViolationException cveException){
+        HttpStatus error422 = HttpStatus.UNPROCESSABLE_ENTITY;
         ConstraintViolationExceptionDetails cveDetails = ConstraintViolationExceptionDetails.Builder
                 .newBuilder()
-                .title("Element already exists")
-                .status(HttpStatus.I_AM_A_TEAPOT.value())
+                .title("Email already being used.")
+                .status(error422.value())
                 .build();
-        return new ResponseEntity<>(cveDetails, HttpStatus.I_AM_A_TEAPOT);
+        return new ResponseEntity<>(cveDetails, error422);
     }
-
 }
