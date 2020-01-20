@@ -1,6 +1,7 @@
 package com.br.github.gabrielotsuka.storesystem.controllers;
 
 import com.br.github.gabrielotsuka.storesystem.controllers.request.CustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.PasswordRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.services.CustomerService;
@@ -41,6 +42,12 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> editCustomer(@PathVariable(value = "id") Long id,
                                                        @RequestBody @Valid CustomerRequest newCustomer){
         return customerService.editCustomer(id, newCustomer);
+    }
+
+    @PutMapping(value = "/admin/customer/{id}/changePwd")
+    public ResponseEntity<CustomerResponse> changeCustomerPwd(@PathVariable(value = "id") Long id,
+                                                              @RequestBody @Valid PasswordRequest newPwd){
+        return customerService.changeCustomerPwd(id, newPwd);
     }
 
     @DeleteMapping(value = "/admin/customer/{id}")

@@ -1,5 +1,6 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
+import com.br.github.gabrielotsuka.storesystem.controllers.request.PasswordRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.EmployeeResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
@@ -51,6 +52,13 @@ public class EmployeeService {
         Employee employee = verifyEmployeeExistence(id);
         employeeRepository.delete(employee);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<EmployeeResponse> changeEmployeePwd(Long id, PasswordRequest newPwd) {
+        Employee employee = verifyEmployeeExistence(id);
+        employee.setPwd(newPwd.getPwd());
+        employeeRepository.save(employee);
+        return new ResponseEntity<EmployeeResponse>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
     }
 
     private Employee verifyEmployeeExistence(Long id){

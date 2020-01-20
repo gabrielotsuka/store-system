@@ -1,6 +1,7 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
 import com.br.github.gabrielotsuka.storesystem.controllers.request.CustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.PasswordRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
@@ -47,6 +48,13 @@ public class CustomerService {
         oldCustomer.setName(newCustomer.getName());
         customerRepository.save(oldCustomer);
         return new ResponseEntity<CustomerResponse>(CustomerResponse.toResponse(oldCustomer), HttpStatus.OK);
+    }
+
+    public ResponseEntity<CustomerResponse> changeCustomerPwd(Long id, PasswordRequest newPwd) {
+        Customer customer = verifyCustomerExistence(id);
+        customer.setPwd(newPwd.getPwd());
+        customerRepository.save(customer);
+        return new ResponseEntity<CustomerResponse>(CustomerResponse.toResponse(customer), HttpStatus.OK);
     }
 
     public ResponseEntity<Object> deleteCustomer(Long id) {

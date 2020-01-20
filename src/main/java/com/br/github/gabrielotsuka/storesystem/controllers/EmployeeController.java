@@ -1,6 +1,7 @@
 package com.br.github.gabrielotsuka.storesystem.controllers;
 
 import com.br.github.gabrielotsuka.storesystem.controllers.request.EmployeeRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.PasswordRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.EmployeeResponse;
 import com.br.github.gabrielotsuka.storesystem.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,11 @@ public class EmployeeController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") Long id){
         return employeeService.deleteEmployee(id);
+    }
+
+    @PutMapping(value = "/{id}/changePwd")
+    public ResponseEntity<EmployeeResponse> changeEmployeePwd(@PathVariable(value = "id") Long id,
+                                                              @Valid @RequestBody PasswordRequest newPwd){
+        return employeeService.changeEmployeePwd(id, newPwd);
     }
 }
