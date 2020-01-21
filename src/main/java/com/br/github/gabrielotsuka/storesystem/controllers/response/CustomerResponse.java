@@ -2,6 +2,9 @@ package com.br.github.gabrielotsuka.storesystem.controllers.response;
 
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CustomerResponse {
     private Long id;
     private String name;
@@ -18,6 +21,12 @@ public class CustomerResponse {
 
     public static CustomerResponse toResponse(Customer customer) {
         return new CustomerResponse(customer.getId(), customer.getName(), customer.getEmail());
+    }
+
+    public static List<CustomerResponse> toListResponse(List<Customer> customers){
+        List<CustomerResponse> response = new ArrayList<>();
+        customers.forEach(temp -> response.add(CustomerResponse.toResponse(temp)));
+        return response;
     }
 
     public Long getId() {

@@ -47,7 +47,7 @@ public class RestExceptionHandler {
         HttpStatus error422 = HttpStatus.UNPROCESSABLE_ENTITY;
         ConstraintViolationExceptionDetails cveDetails = ConstraintViolationExceptionDetails.Builder
                 .newBuilder()
-                .title("Email already being used.")
+                .title("Element already registered.")
                 .status(error422.value())
                 .build();
         return new ResponseEntity<>(cveDetails, error422);

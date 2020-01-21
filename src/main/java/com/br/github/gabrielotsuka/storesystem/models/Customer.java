@@ -26,6 +26,11 @@ public class Customer {
         this.pwd = pwd;
     }
 
+    public Customer(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public Customer() {
         super();
     }

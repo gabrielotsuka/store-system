@@ -22,6 +22,11 @@ public class Employee {
         this.pwd = pwd;
     }
 
+    public Employee(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public Employee() {
         super();
     }

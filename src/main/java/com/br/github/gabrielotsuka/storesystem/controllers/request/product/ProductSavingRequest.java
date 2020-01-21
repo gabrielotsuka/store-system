@@ -1,4 +1,4 @@
-package com.br.github.gabrielotsuka.storesystem.controllers.request;
+package com.br.github.gabrielotsuka.storesystem.controllers.request.product;
 
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import org.hibernate.validator.constraints.Range;
@@ -7,7 +7,7 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
-public class ProductRequest {
+public class ProductSavingRequest {
     @NotBlank
     private String name;
     @DecimalMin("0.0")

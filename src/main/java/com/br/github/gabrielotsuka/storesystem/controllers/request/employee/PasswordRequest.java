@@ -1,6 +1,4 @@
-package com.br.github.gabrielotsuka.storesystem.controllers.request;
-
-import com.br.github.gabrielotsuka.storesystem.models.Employee;
+package com.br.github.gabrielotsuka.storesystem.controllers.request.employee;
 
 import javax.validation.constraints.NotBlank;
 

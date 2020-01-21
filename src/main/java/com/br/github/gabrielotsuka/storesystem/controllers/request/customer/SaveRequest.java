@@ -1,11 +1,11 @@
-package com.br.github.gabrielotsuka.storesystem.controllers.request;
+package com.br.github.gabrielotsuka.storesystem.controllers.request.customer;
 
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class CustomerRequest {
+public class SaveRequest {
     @NotBlank
     private String name;
     @NotBlank

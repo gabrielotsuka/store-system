@@ -1,16 +1,12 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
-import com.br.github.gabrielotsuka.storesystem.controllers.request.PasswordRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.response.EmployeeResponse;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordRequest;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import com.br.github.gabrielotsuka.storesystem.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,42 +19,39 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public ResponseEntity<EmployeeResponse> save(Employee employee){
+    public Employee save(Employee employee){
         employeeRepository.save(employee);
-        return new ResponseEntity<EmployeeResponse>(EmployeeResponse.toResponse(employee), HttpStatus.CREATED);
+        return employee;
     }
 
-    public List<EmployeeResponse> getEmployees(){
+    public List<Employee> getEmployees(){
         List<Employee> arr = employeeRepository.findAll();
-        List<EmployeeResponse> response = new ArrayList<>();
-        arr.forEach(temp -> response.add(EmployeeResponse.toResponse(temp)));
-        return response;
+        return arr;
     }
 
-    public ResponseEntity<EmployeeResponse> getEmployeeById(Long id){
+    public Employee getEmployeeById(Long id){
         Employee employee = verifyEmployeeExistence(id);
-        return new ResponseEntity<EmployeeResponse>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
+        return employee;
     }
 
-    public ResponseEntity<EmployeeResponse> editEmployee(Long id, Employee newEmployee){
+    public Employee editEmployee(Long id, Employee newEmployee){
         Employee employee = verifyEmployeeExistence(id);
         employee.setName(newEmployee.getName());
         employee.setEmail(newEmployee.getEmail());
         employeeRepository.save(employee);
-        return new ResponseEntity<EmployeeResponse>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
+        return employee;
     }
 
-    public ResponseEntity<Object> deleteEmployee(Long id){
+    public void deleteEmployee(Long id){
         Employee employee = verifyEmployeeExistence(id);
         employeeRepository.delete(employee);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<EmployeeResponse> changeEmployeePwd(Long id, PasswordRequest newPwd) {
+    public Employee changeEmployeePwd(Long id, PasswordRequest newPwd) {
         Employee employee = verifyEmployeeExistence(id);
         employee.setPwd(newPwd.getPwd());
         employeeRepository.save(employee);
-        return new ResponseEntity<EmployeeResponse>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
+        return employee;
     }
 
     private Employee verifyEmployeeExistence(Long id){

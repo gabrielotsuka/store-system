@@ -19,32 +19,31 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public ResponseEntity<Product> save(Product product){
+    public Product save(Product product){
         productRepository.save(product);
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        return product;
     }
 
     public List<Product> getProducts(){
         return productRepository.findAll();
     }
 
-    public ResponseEntity<Product> getProductById(Long id) {
-        return new ResponseEntity<Product>(verifyProductExistence(id), HttpStatus.OK);
+    public Product getProductById(Long id) {
+        return verifyProductExistence(id);
     }
 
-    public ResponseEntity<Product> editProduct(Product newProd, Long id) {
+    public Product editProduct(Product newProd, Long id) {
         Product oldProd = verifyProductExistence(id);
         oldProd.setName(newProd.getName());
         oldProd.setPrice(newProd.getPrice());
         oldProd.setQuantity(newProd.getQuantity());
         productRepository.save(oldProd);
-        return new ResponseEntity<Product>(oldProd, HttpStatus.OK);
+        return oldProd;
     }
 
-    public ResponseEntity<Object> deleteProduct(Long id) {
+    public void deleteProduct(Long id) {
         Product prod = verifyProductExistence(id);
         productRepository.delete(prod);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private Product verifyProductExistence(Long id) {
