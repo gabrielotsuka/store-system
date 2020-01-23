@@ -11,14 +11,11 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "customerId")
+    @Column(name = "id")
     private Long id;
     private String name;
     private String email;
     private String pwd;
-    @OneToMany
-    @JoinColumn(name = "customerId", referencedColumnName = "customerId")
-    private List<Product> cart;
 
     public Customer(String name, String email, String pwd) {
         this.name = name;
@@ -67,11 +64,4 @@ public class Customer {
         this.pwd = pwd;
     }
 
-    public List<Product> getCart() {
-        return cart;
-    }
-
-    public void setCart(List<Product> cart) {
-        this.cart = cart;
-    }
 }

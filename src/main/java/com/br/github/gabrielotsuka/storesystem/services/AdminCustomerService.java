@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerService {
+public class AdminCustomerService {
     private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
+    public AdminCustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -54,11 +54,6 @@ public class CustomerService {
     public void deleteCustomer(Long id) {
         Customer customer = verifyCustomerExistence(id);
         customerRepository.delete(customer);
-    }
-
-    public List<Product> describeCart(Long id) {
-        Customer customer = verifyCustomerExistence(id);
-        return customer.getCart();
     }
 
     private Customer verifyCustomerExistence(Long id){

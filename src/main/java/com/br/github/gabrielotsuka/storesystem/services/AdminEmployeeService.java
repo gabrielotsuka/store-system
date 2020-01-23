@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeService {
+public class AdminEmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository){
+    public AdminEmployeeService(EmployeeRepository employeeRepository){
         this.employeeRepository = employeeRepository;
     }
 

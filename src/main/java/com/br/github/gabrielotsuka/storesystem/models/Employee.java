@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employeeId")
+    @Column(name = "id")
     private Long id;
     private String name;
     private String email;

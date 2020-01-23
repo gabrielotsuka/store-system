@@ -5,8 +5,7 @@ import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.Save
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
-import com.br.github.gabrielotsuka.storesystem.models.Product;
-import com.br.github.gabrielotsuka.storesystem.services.CustomerService;
+import com.br.github.gabrielotsuka.storesystem.services.AdminCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,57 +16,52 @@ import java.util.List;
 
 @RestController
 
-public class CustomerController {
+public class AdminCustomerController {
 
-    private final CustomerService customerService;
+    private final AdminCustomerService adminCustomerService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public AdminCustomerController(AdminCustomerService adminCustomerService) {
+        this.adminCustomerService = adminCustomerService;
     }
 
     @PostMapping(value = "/admin/customer")
     public ResponseEntity<CustomerResponse> save(@RequestBody @Valid SaveRequest customer){
-        Customer customerRet = customerService.save(customer.toCustomer());
+        Customer customerRet = adminCustomerService.save(customer.toCustomer());
         return new ResponseEntity<CustomerResponse>(CustomerResponse.toResponse(customerRet),HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/admin/customer")
     public ResponseEntity<List<CustomerResponse>> getCustomers(){
         return new ResponseEntity<List<CustomerResponse>>
-                (CustomerResponse.toListResponse(customerService.getCustomers()),
+                (CustomerResponse.toListResponse(adminCustomerService.getCustomers()),
                 HttpStatus.OK);
     }
 
     @GetMapping(value = "/admin/customer/{id}")
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable(value = "id") Long id){
-        Customer response = customerService.getCustomerById(id);
+        Customer response = adminCustomerService.getCustomerById(id);
         return new ResponseEntity<CustomerResponse>(CustomerResponse.toResponse(response), HttpStatus.OK);
     }
 
     @PutMapping(value = "/admin/customer/{id}")
     public ResponseEntity<CustomerResponse> editCustomer(@PathVariable(value = "id") Long id,
                                                            @RequestBody @Valid EditRequest newCustomer){
-        Customer response = customerService.editCustomer(id, newCustomer);
+        Customer response = adminCustomerService.editCustomer(id, newCustomer);
         return new ResponseEntity<CustomerResponse>(CustomerResponse.toResponse(response), HttpStatus.OK);
     }
 
     @PutMapping(value = "/admin/customer/{id}/changePwd")
     public ResponseEntity<CustomerResponse> changeCustomerPwd(@PathVariable(value = "id") Long id,
                                                               @RequestBody @Valid PasswordRequest newPwd){
-        Customer response = customerService.changeCustomerPwd(id, newPwd);
+        Customer response = adminCustomerService.changeCustomerPwd(id, newPwd);
         return new ResponseEntity<CustomerResponse>(CustomerResponse.toResponse(response),  HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/admin/customer/{id}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable(value = "id") Long id){
-        customerService.deleteCustomer(id);
+        adminCustomerService.deleteCustomer(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping(value = "/customer/{id}/cart/list")
-    public List<Product> describeCart(@PathVariable(value = "id") Long id){
-        return customerService.describeCart(id);
     }
 
 }
