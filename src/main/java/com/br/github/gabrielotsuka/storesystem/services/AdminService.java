@@ -2,13 +2,13 @@ package com.br.github.gabrielotsuka.storesystem.services;
 
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.PasswordEmployeeRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
+import com.br.github.gabrielotsuka.storesystem.models.Admin;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
-import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
-import com.br.github.gabrielotsuka.storesystem.repositories.EmployeeRepository;
+import com.br.github.gabrielotsuka.storesystem.repositories.AdminRepository;
 import com.br.github.gabrielotsuka.storesystem.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ public class AdminService {
     @Autowired
     private final CustomerRepository customerRepository;
     @Autowired
-    private final EmployeeRepository employeeRepository;
+    private final AdminRepository adminRepository;
     @Autowired
     private final ProductRepository productRepository;
 
-    public AdminService(CustomerRepository customerRepository, EmployeeRepository employeeRepository, ProductRepository productRepository) {
+    public AdminService(CustomerRepository customerRepository, AdminRepository adminRepository, ProductRepository productRepository) {
         this.customerRepository = customerRepository;
-        this.employeeRepository = employeeRepository;
+        this.adminRepository = adminRepository;
         this.productRepository = productRepository;
     }
 
@@ -73,48 +73,48 @@ public class AdminService {
         Customer customer = verifyCustomerExistence(id);
         customerRepository.delete(customer);
     }
-//  Employee
-    private Employee verifyEmployeeExistence(Long id){
-        Optional<Employee> user = employeeRepository.findById(id);
+//  Admin
+    private Admin verifyAdminExistence(Long id){
+        Optional<Admin> user = adminRepository.findById(id);
         if(!user.isPresent())
-            throw new ResourceNotFoundException("Employee not found. ID: "+id);
+            throw new ResourceNotFoundException("Admin not found. ID: "+id);
         else
             return user.get();
     }
 
-    public Employee saveEmployee(Employee employee){
-        employeeRepository.save(employee);
-        return employee;
+    public Admin saveAdmin(Admin admin){
+        adminRepository.save(admin);
+        return admin;
     }
 
-    public List<Employee> getEmployees(){
-        List<Employee> arr = employeeRepository.findAll();
+    public List<Admin> getAdmins(){
+        List<Admin> arr = adminRepository.findAll();
         return arr;
     }
 
-    public Employee getEmployeeById(Long id){
-        Employee employee = verifyEmployeeExistence(id);
-        return employee;
+    public Admin getAdminById(Long id){
+        Admin admin = verifyAdminExistence(id);
+        return admin;
     }
 
-    public Employee editEmployee(Long id, Employee newEmployee){
-        Employee employee = verifyEmployeeExistence(id);
-        employee.setName(newEmployee.getName());
-        employee.setEmail(newEmployee.getEmail());
-        employeeRepository.save(employee);
-        return employee;
+    public Admin editAdmin(Long id, Admin newAdmin){
+        Admin admin = verifyAdminExistence(id);
+        admin.setName(newAdmin.getName());
+        admin.setEmail(newAdmin.getEmail());
+        adminRepository.save(admin);
+        return admin;
     }
 
-    public void deleteEmployee(Long id){
-        Employee employee = verifyEmployeeExistence(id);
-        employeeRepository.delete(employee);
+    public void deleteAdmin(Long id){
+        Admin admin = verifyAdminExistence(id);
+        adminRepository.delete(admin);
     }
 
-    public Employee changeEmployeePwd(Long id, PasswordEmployeeRequest newPwd) {
-        Employee employee = verifyEmployeeExistence(id);
-        employee.setPwd(newPwd.getPwd());
-        employeeRepository.save(employee);
-        return employee;
+    public Admin changeAdminPwd(Long id, PasswordAdminRequest newPwd) {
+        Admin admin = verifyAdminExistence(id);
+        admin.setPwd(newPwd.getPwd());
+        adminRepository.save(admin);
+        return admin;
     }
 
 //  Product

@@ -1,7 +1,5 @@
 package com.br.github.gabrielotsuka.storesystem.controllers.request.customer;
 
-import com.br.github.gabrielotsuka.storesystem.models.Employee;
-
 import javax.validation.constraints.NotBlank;
 
 public class PasswordCustomerRequest {

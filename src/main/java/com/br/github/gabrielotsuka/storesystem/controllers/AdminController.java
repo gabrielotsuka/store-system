@@ -3,14 +3,14 @@ package com.br.github.gabrielotsuka.storesystem.controllers;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.SaveCustomerRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.EditEmployeeRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.PasswordEmployeeRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.SaveEmployeeRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.EditAdminRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.SaveAdminRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.product.ProductSavingRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
-import com.br.github.gabrielotsuka.storesystem.controllers.response.EmployeeResponse;
+import com.br.github.gabrielotsuka.storesystem.controllers.response.AdminResponse;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
-import com.br.github.gabrielotsuka.storesystem.models.Employee;
+import com.br.github.gabrielotsuka.storesystem.models.Admin;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,43 +71,43 @@ public class AdminController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-//  Employee
-    @PostMapping(value = "/employee")
-    public ResponseEntity<EmployeeResponse> saveEmployee(@RequestBody @Valid SaveEmployeeRequest employee) {
-        Employee response = adminService.saveEmployee(employee.toEmployee());
-        return new ResponseEntity<>(EmployeeResponse.toResponse(response), HttpStatus.CREATED);
+//  Admin
+    @PostMapping(value = "/admin")
+    public ResponseEntity<AdminResponse> saveAdmin(@RequestBody @Valid SaveAdminRequest admin) {
+        Admin response = adminService.saveAdmin(admin.toAdmin());
+        return new ResponseEntity<>(AdminResponse.toResponse(response), HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/employee")
-    public ResponseEntity<List<EmployeeResponse>> getEmployees() {
-        List<Employee> employees = adminService.getEmployees();
-        return new ResponseEntity<>(EmployeeResponse.toListResponse(employees), HttpStatus.OK);
+    @GetMapping(value = "/admin")
+    public ResponseEntity<List<AdminResponse>> getAdmins() {
+        List<Admin> admins = adminService.getAdmins();
+        return new ResponseEntity<>(AdminResponse.toListResponse(admins), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/employee/{id}")
-    public ResponseEntity<EmployeeResponse> getEmployeeById (@PathVariable(value = "id") Long id) {
-        Employee employee = adminService.getEmployeeById(id);
-        return new ResponseEntity<>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
+    @GetMapping(value = "/admin/{id}")
+    public ResponseEntity<AdminResponse> getAdminById (@PathVariable(value = "id") Long id) {
+        Admin admin = adminService.getAdminById(id);
+        return new ResponseEntity<>(AdminResponse.toResponse(admin), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/employee/{id}")
-    public ResponseEntity<EmployeeResponse> editEmployee(@PathVariable(value = "id") Long id,
-                                                         @Valid @RequestBody EditEmployeeRequest newUser){
-        Employee employee = adminService.editEmployee(id, newUser.toEmployee());
-        return new ResponseEntity<>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
+    @PutMapping(value = "/admin/{id}")
+    public ResponseEntity<AdminResponse> editAdmin(@PathVariable(value = "id") Long id,
+                                                      @Valid @RequestBody EditAdminRequest newUser){
+        Admin admin = adminService.editAdmin(id, newUser.toAdmin());
+        return new ResponseEntity<>(AdminResponse.toResponse(admin), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/employee/{id}")
-    public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") Long id){
-        adminService.deleteEmployee(id);
+    @DeleteMapping(value = "/admin/{id}")
+    public ResponseEntity<Object> deleteAdmin(@PathVariable(value = "id") Long id){
+        adminService.deleteAdmin(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PutMapping(value = "/employee/{id}/changePwd")
-    public ResponseEntity<EmployeeResponse> changeEmployeePwd(@PathVariable(value = "id") Long id,
-                                                              @Valid @RequestBody PasswordEmployeeRequest newPwd){
-        Employee employee = adminService.changeEmployeePwd(id, newPwd);
-        return new ResponseEntity<>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
+    @PutMapping(value = "/admin/{id}/changePwd")
+    public ResponseEntity<AdminResponse> changeAdminPwd(@PathVariable(value = "id") Long id,
+                                                           @Valid @RequestBody PasswordAdminRequest newPwd){
+        Admin admin = adminService.changeAdminPwd(id, newPwd);
+        return new ResponseEntity<>(AdminResponse.toResponse(admin), HttpStatus.OK);
     }
 
 //  Product

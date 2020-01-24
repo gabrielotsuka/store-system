@@ -1,11 +1,11 @@
-package com.br.github.gabrielotsuka.storesystem.controllers.request.employee;
+package com.br.github.gabrielotsuka.storesystem.controllers.request.admin;
 
-import com.br.github.gabrielotsuka.storesystem.models.Employee;
+import com.br.github.gabrielotsuka.storesystem.models.Admin;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class SaveEmployeeRequest {
+public class SaveAdminRequest {
     @NotBlank
     private String name;
     @NotBlank
@@ -14,8 +14,8 @@ public class SaveEmployeeRequest {
     @NotBlank
     private String pwd;
 
-    public Employee toEmployee(){
-        return new Employee(name,email,pwd);
+    public Admin toAdmin(){
+        return new Admin(name,email,pwd);
     }
 
     public String getName() {

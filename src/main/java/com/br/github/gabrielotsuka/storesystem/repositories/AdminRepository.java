@@ -1,10 +1,10 @@
 package com.br.github.gabrielotsuka.storesystem.repositories;
 
-import com.br.github.gabrielotsuka.storesystem.models.Employee;
+import com.br.github.gabrielotsuka.storesystem.models.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface AdminRepository extends JpaRepository<Admin, Long> {
 
 }

@@ -4,10 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(
-        name = "employee",
+        name = "admin",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})}
 )
-public class Employee {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,18 +16,18 @@ public class Employee {
     private String email;
     private String pwd;
 
-    public Employee(String name, String email, String pwd) {
+    public Admin(String name, String email, String pwd) {
         this.name = name;
         this.email = email;
         this.pwd = pwd;
     }
 
-    public Employee(String name, String email) {
+    public Admin(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public Employee() {
+    public Admin() {
         super();
     }
 
