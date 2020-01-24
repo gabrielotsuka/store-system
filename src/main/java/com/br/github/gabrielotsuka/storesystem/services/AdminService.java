@@ -7,9 +7,7 @@ import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Admin;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
-import com.br.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
 import com.br.github.gabrielotsuka.storesystem.repositories.AdminRepository;
-import com.br.github.gabrielotsuka.storesystem.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,60 +17,20 @@ import java.util.Optional;
 @Service
 public class AdminService {
     @Autowired
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
     @Autowired
     private final AdminRepository adminRepository;
     @Autowired
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public AdminService(CustomerRepository customerRepository, AdminRepository adminRepository, ProductRepository productRepository) {
-        this.customerRepository = customerRepository;
+    public AdminService(CustomerService customerService,
+                        AdminRepository adminRepository,
+                        ProductService productService) {
+        this.customerService = customerService;
         this.adminRepository = adminRepository;
-        this.productRepository = productRepository;
+        this.productService = productService;
     }
 
-//  Customer
-    private Customer verifyCustomerExistence(Long id){
-        Optional<Customer> customer = customerRepository.findById(id);
-        if(!customer.isPresent())
-            throw new ResourceNotFoundException("Customer not found. ID: " + id);
-        else
-            return customer.get();
-    }
-
-    public Customer saveCustomer(Customer customer) {
-        customerRepository.save(customer);
-        return customer;
-    }
-
-    public List<Customer> getCustomers() {
-        return customerRepository.findAll();
-    }
-
-    public Customer getCustomerById(Long id) {
-        Customer customer = verifyCustomerExistence(id);
-        return customer;
-    }
-
-    public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
-        Customer oldCustomer = verifyCustomerExistence(id);
-        oldCustomer.setEmail(newCustomer.getEmail());
-        oldCustomer.setName(newCustomer.getName());
-        customerRepository.save(oldCustomer);
-        return oldCustomer;
-    }
-
-    public Customer changeCustomerPwd(Long id, PasswordCustomerRequest newPwd) {
-        Customer customer = verifyCustomerExistence(id);
-        customer.setPwd(newPwd.getPwd());
-        customerRepository.save(customer);
-        return customer;
-    }
-
-    public void deleteCustomer(Long id) {
-        Customer customer = verifyCustomerExistence(id);
-        customerRepository.delete(customer);
-    }
 //  Admin
     private Admin verifyAdminExistence(Long id){
         Optional<Admin> user = adminRepository.findById(id);
@@ -117,40 +75,51 @@ public class AdminService {
         return admin;
     }
 
-//  Product
-    private Product verifyProductExistence(Long id) {
-        Optional<Product> prod = productRepository.findById(id);
-        if (!prod.isPresent())
-            throw new ResourceNotFoundException("Product not found. ID: " + id);
-        else
-            return prod.get();
+//  Customer
+    public Customer saveCustomer(Customer customer) {
+        return customerService.saveCustomer(customer);
     }
 
+    public List<Customer> getCustomers() {
+        return customerService.getCustomers();
+    }
+
+    public Customer getCustomerById(Long id) {
+        return customerService.getCustomerById(id);
+    }
+
+    public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
+        return customerService.editCustomer(id, newCustomer);
+    }
+
+    public Customer changeCustomerPwd(Long id, PasswordCustomerRequest newPwd) {
+        return customerService.changeCustomerPwd(id, newPwd);
+    }
+
+    public void deleteCustomer(Long id) {
+        customerService.deleteCustomer(id);
+    }
+
+
+//  Product
     public Product saveProduct(Product product){
-        productRepository.save(product);
-        return product;
+        return productService.saveProduct(product);
     }
 
     public List<Product> getProducts(){
-        return productRepository.findAll();
+        return productService.getProducts();
     }
 
     public Product getProductById(Long id) {
-        return verifyProductExistence(id);
+        return productService.getProductById(id);
     }
 
     public Product editProduct(Product newProd, Long id) {
-        Product oldProd = verifyProductExistence(id);
-        oldProd.setName(newProd.getName());
-        oldProd.setPrice(newProd.getPrice());
-        oldProd.setQuantity(newProd.getQuantity());
-        productRepository.save(oldProd);
-        return oldProd;
+        return productService.editProduct(newProd, id);
     }
 
     public void deleteProduct(Long id) {
-        Product prod = verifyProductExistence(id);
-        productRepository.delete(prod);
+        productService.deleteProduct(id);
     }
 
 }
