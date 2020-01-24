@@ -4,7 +4,7 @@ import com.br.github.gabrielotsuka.storesystem.models.Employee;
 
 import javax.validation.constraints.NotBlank;
 
-public class PasswordRequest {
+public class PasswordCustomerRequest {
     @NotBlank
     private String pwd;
 

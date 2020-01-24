@@ -6,7 +6,7 @@ import com.br.github.gabrielotsuka.storesystem.models.Employee;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class EditRequest {
+public class EditEmployeeRequest {
     @NotBlank
     private String name;
     @NotBlank

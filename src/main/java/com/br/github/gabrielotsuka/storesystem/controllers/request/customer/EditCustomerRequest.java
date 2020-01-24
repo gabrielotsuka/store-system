@@ -1,11 +1,12 @@
 package com.br.github.gabrielotsuka.storesystem.controllers.request.customer;
 
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
+import com.br.github.gabrielotsuka.storesystem.models.Employee;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class EditRequest {
+public class EditCustomerRequest {
     @NotBlank
     private String name;
     @NotBlank
@@ -21,4 +22,5 @@ public class EditRequest {
     public String getEmail() {
         return email;
     }
+
 }

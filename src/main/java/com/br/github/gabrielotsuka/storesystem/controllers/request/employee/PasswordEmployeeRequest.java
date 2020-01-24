@@ -2,7 +2,7 @@ package com.br.github.gabrielotsuka.storesystem.controllers.request.employee;
 
 import javax.validation.constraints.NotBlank;
 
-public class PasswordRequest {
+public class PasswordEmployeeRequest {
     @NotBlank
     private String pwd;
 

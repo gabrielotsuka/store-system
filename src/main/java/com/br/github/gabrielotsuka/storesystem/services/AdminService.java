@@ -1,7 +1,8 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.PasswordEmployeeRequest;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import com.br.github.gabrielotsuka.storesystem.models.Employee;
@@ -53,7 +54,7 @@ public class AdminService {
         return customer;
     }
 
-    public Customer editCustomer(Long id, EditRequest newCustomer) {
+    public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
         Customer oldCustomer = verifyCustomerExistence(id);
         oldCustomer.setEmail(newCustomer.getEmail());
         oldCustomer.setName(newCustomer.getName());
@@ -61,7 +62,7 @@ public class AdminService {
         return oldCustomer;
     }
 
-    public Customer changeCustomerPwd(Long id, PasswordRequest newPwd) {
+    public Customer changeCustomerPwd(Long id, PasswordCustomerRequest newPwd) {
         Customer customer = verifyCustomerExistence(id);
         customer.setPwd(newPwd.getPwd());
         customerRepository.save(customer);
@@ -109,7 +110,7 @@ public class AdminService {
         employeeRepository.delete(employee);
     }
 
-    public Employee changeEmployeePwd(Long id, PasswordRequest newPwd) {
+    public Employee changeEmployeePwd(Long id, PasswordEmployeeRequest newPwd) {
         Employee employee = verifyEmployeeExistence(id);
         employee.setPwd(newPwd.getPwd());
         employeeRepository.save(employee);

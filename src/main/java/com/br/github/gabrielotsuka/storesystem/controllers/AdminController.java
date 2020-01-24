@@ -1,9 +1,11 @@
 package com.br.github.gabrielotsuka.storesystem.controllers;
 
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.SaveRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.SavingRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.SaveCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.EditEmployeeRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.PasswordEmployeeRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.employee.SaveEmployeeRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.product.ProductSavingRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.EmployeeResponse;
@@ -31,7 +33,7 @@ public class AdminController {
 
 //   Customer
     @PostMapping(value = "/customer")
-    public ResponseEntity<CustomerResponse> saveCustomer(@RequestBody @Valid SaveRequest customer){
+    public ResponseEntity<CustomerResponse> saveCustomer(@RequestBody @Valid SaveCustomerRequest customer){
         Customer customerRet = adminService.saveCustomer(customer.toCustomer());
         return new ResponseEntity<>(CustomerResponse.toResponse(customerRet), HttpStatus.CREATED);
     }
@@ -51,14 +53,14 @@ public class AdminController {
 
     @PutMapping(value = "/customer/{id}")
     public ResponseEntity<CustomerResponse> editCustomer(@PathVariable(value = "id") Long id,
-                                                         @RequestBody @Valid EditRequest newCustomer){
+                                                         @RequestBody @Valid EditCustomerRequest newCustomer){
         Customer response = adminService.editCustomer(id, newCustomer);
         return new ResponseEntity<>(CustomerResponse.toResponse(response), HttpStatus.OK);
     }
 
     @PutMapping(value = "/customer/{id}/changePwd")
     public ResponseEntity<CustomerResponse> changeCustomerPwd(@PathVariable(value = "id") Long id,
-                                                              @RequestBody @Valid PasswordRequest newPwd){
+                                                              @RequestBody @Valid PasswordCustomerRequest newPwd){
         Customer response = adminService.changeCustomerPwd(id, newPwd);
         return new ResponseEntity<>(CustomerResponse.toResponse(response), HttpStatus.OK);
     }
@@ -71,7 +73,7 @@ public class AdminController {
 
 //  Employee
     @PostMapping(value = "/employee")
-    public ResponseEntity<EmployeeResponse> saveEmployee(@RequestBody @Valid SavingRequest employee) {
+    public ResponseEntity<EmployeeResponse> saveEmployee(@RequestBody @Valid SaveEmployeeRequest employee) {
         Employee response = adminService.saveEmployee(employee.toEmployee());
         return new ResponseEntity<>(EmployeeResponse.toResponse(response), HttpStatus.CREATED);
     }
@@ -90,7 +92,7 @@ public class AdminController {
 
     @PutMapping(value = "/employee/{id}")
     public ResponseEntity<EmployeeResponse> editEmployee(@PathVariable(value = "id") Long id,
-                                                         @Valid @RequestBody com.br.github.gabrielotsuka.storesystem.controllers.request.employee.EditRequest newUser){
+                                                         @Valid @RequestBody EditEmployeeRequest newUser){
         Employee employee = adminService.editEmployee(id, newUser.toEmployee());
         return new ResponseEntity<>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
     }
@@ -103,7 +105,7 @@ public class AdminController {
 
     @PutMapping(value = "/employee/{id}/changePwd")
     public ResponseEntity<EmployeeResponse> changeEmployeePwd(@PathVariable(value = "id") Long id,
-                                                              @Valid @RequestBody PasswordRequest newPwd){
+                                                              @Valid @RequestBody PasswordEmployeeRequest newPwd){
         Employee employee = adminService.changeEmployeePwd(id, newPwd);
         return new ResponseEntity<>(EmployeeResponse.toResponse(employee), HttpStatus.OK);
     }

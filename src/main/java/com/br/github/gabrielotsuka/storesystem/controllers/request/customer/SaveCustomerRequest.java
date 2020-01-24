@@ -5,7 +5,7 @@ import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class SaveRequest {
+public class SaveCustomerRequest {
     @NotBlank
     private String name;
     @NotBlank
