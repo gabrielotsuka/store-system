@@ -4,6 +4,9 @@ import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.Edit
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
+import com.br.github.gabrielotsuka.storesystem.models.Item;
+import com.br.github.gabrielotsuka.storesystem.models.Order;
+import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +19,15 @@ public class CustomerService {
 
     @Autowired
     private final CustomerRepository customerRepository;
+    @Autowired
+    private final OrderService orderService;
+    @Autowired
+    private final ProductService productService;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, OrderService orderService, ProductService productService) {
         this.customerRepository = customerRepository;
+        this.orderService = orderService;
+        this.productService = productService;
     }
 
     private Customer verifyCustomerExistence(Long id){
@@ -36,6 +45,10 @@ public class CustomerService {
 
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
+    }
+
+    public List<Product> getStock() {
+        return productService.getProducts();
     }
 
     public Customer getCustomerById(Long id) {
@@ -61,5 +74,15 @@ public class CustomerService {
     public void deleteCustomer(Long id) {
         Customer customer = verifyCustomerExistence(id);
         customerRepository.delete(customer);
+    }
+
+    public List<Order> getCustomerOrders(Long id) {
+        verifyCustomerExistence(id);
+        return orderService.getCustomerOrders(id);
+    }
+
+    public Order addItemToOrder(Long id, Item item) {
+        verifyCustomerExistence(id);
+        return orderService.addItemToOrder(id, item);
     }
 }

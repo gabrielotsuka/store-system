@@ -6,18 +6,22 @@ import javax.persistence.*;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "item_id")
     private Long id;
     private Integer quantity;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
 
     public Item() {
         super();
+    }
+
+    public Item(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Long getId() {

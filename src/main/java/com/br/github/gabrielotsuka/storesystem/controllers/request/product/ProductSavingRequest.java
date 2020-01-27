@@ -13,7 +13,7 @@ public class ProductSavingRequest {
     @DecimalMin("0.0")
     private Double price;
     @Range(min = 0)
-    private int quantity;
+    private Integer quantity;
 
     public Product toProduct(){
         return new Product(name,price,quantity);

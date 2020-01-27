@@ -1,6 +1,7 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
 import com.br.github.gabrielotsuka.storesystem.models.Item;
+import com.br.github.gabrielotsuka.storesystem.models.Order;
 import com.br.github.gabrielotsuka.storesystem.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,7 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Item> addItem(List<Item> items, Item item){
-        items.add(item);
-        itemRepository.save(item);
-        return items;
+    public void addItemToOrder(Order order, Item item) {
+
     }
 }
