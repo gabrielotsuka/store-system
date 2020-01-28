@@ -6,8 +6,6 @@ import com.br.github.gabrielotsuka.storesystem.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ItemService {
     @Autowired
@@ -17,7 +15,9 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public void addItemToOrder(Order order, Item item) {
-
+    public Item addItemToOrder(Order order, Item item) {
+        item.setOrder(order);
+        itemRepository.save(item);
+        return item;
     }
 }

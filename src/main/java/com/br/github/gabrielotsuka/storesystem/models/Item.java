@@ -12,16 +12,20 @@ public class Item {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
+    private double itemPrice;
 
-    public Item() {
-        super();
+    public Item(Product product, Integer quantity) {
+        this.setProduct(product);
+        this.setQuantity(quantity);
     }
 
-    public Item(Integer quantity) {
-        this.quantity = quantity;
+    public Item(Product prod, Integer quantity, double price) {
+        this.setProduct(prod);
+        this.setQuantity(quantity);
+        this.setItemPrice(price);
     }
 
     public Long getId() {
@@ -32,19 +36,35 @@ public class Item {
         this.id = id;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public Product getProduct() {
         return product;
     }
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public double getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(double itemPrice) {
+        this.itemPrice = itemPrice;
     }
 }

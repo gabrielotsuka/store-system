@@ -9,14 +9,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
-    private double totalPrice;
-    private String status;
-    @ManyToOne
+    private double totalPrice = 0.0;
+    private String status = "Opened";
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
     public Order() {
-        this.status = "Opened";
+        super();
+    }
+
+    public Order(Customer customer) {
+        this.customer = customer;
     }
 
     public String getStatus() {

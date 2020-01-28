@@ -1,5 +1,6 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
+import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import com.br.github.gabrielotsuka.storesystem.models.Item;
 import com.br.github.gabrielotsuka.storesystem.models.Order;
 import com.br.github.gabrielotsuka.storesystem.repositories.OrderRepository;
@@ -30,16 +31,19 @@ public class OrderService {
         return orderRepository.findByCustomerId(id);
     }
 
-    public Order addItemToOrder(Long id, Item item) {
-        Order order = hasOpenedOrder(id);
+    public Order addItemToOrder(Customer customer, Item item) {
+        Order order = hasOpenedOrder(customer);
         itemService.addItemToOrder(order, item);
+        order.setTotalPrice(order.getTotalPrice() + item.getItemPrice());
+        orderRepository.save(order);
+        return order;
     }
 
-    private Order hasOpenedOrder(Long customerId){
-        List<Order> orders = orderRepository.findByCustomerId(customerId);
+    private Order hasOpenedOrder(Customer customer){
+        List<Order> orders = orderRepository.findByCustomerId(customer.getId());
         for (Order order : orders)
             if(order.getStatus().equals("Opened"))
                 return order;
-        return new Order();
+        return new Order(customer);
     }
 }

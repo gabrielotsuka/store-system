@@ -2,6 +2,7 @@ package com.br.github.gabrielotsuka.storesystem.services;
 
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.item.ItemRequest;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import com.br.github.gabrielotsuka.storesystem.models.Item;
@@ -82,7 +83,15 @@ public class CustomerService {
     }
 
     public Order addItemToOrder(Long id, Item item) {
-        verifyCustomerExistence(id);
-        return orderService.addItemToOrder(id, item);
+        Customer customer = verifyCustomerExistence(id);
+        Order order = orderService.addItemToOrder(customer, item);
+        customerRepository.save(customer);
+        return order;
+    }
+
+    public Item setItem(ItemRequest request) {
+        Product prod = productService.getProductById(request.getProductId());
+        Integer quantity = request.getQuantity();
+        return new Item(prod, quantity, quantity * prod.getPrice());
     }
 }

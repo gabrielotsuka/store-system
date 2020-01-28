@@ -2,6 +2,7 @@ package com.br.github.gabrielotsuka.storesystem.controllers;
 
 import com.br.github.gabrielotsuka.storesystem.controllers.request.item.ItemRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
+import com.br.github.gabrielotsuka.storesystem.models.Item;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,9 @@ public class CustomerController {
 
     @PostMapping(value = "/{id}/addItem")
     public ResponseEntity<OrderResponse> addItemToOrder(@PathVariable Long id,
-                                                        @RequestBody @Valid ItemRequest item){
-        return new ResponseEntity<>(OrderResponse.toResponse(customerService.addItemToOrder(id, item.toItem())),
+                                                        @RequestBody @Valid ItemRequest request){
+        Item item = customerService.setItem(request);
+        return new ResponseEntity<>(OrderResponse.toResponse(customerService.addItemToOrder(id, item)),
                 HttpStatus.OK);
     }
 }
