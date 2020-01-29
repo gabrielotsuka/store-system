@@ -58,8 +58,7 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(Long id) {
-        Customer customer = verifyCustomerExistence(id);
-        return customer;
+        return verifyCustomerExistence(id);
     }
 
     public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
@@ -112,9 +111,13 @@ public class CustomerService {
 
     public Order removeItemFromOrder(Long c_id, Long i_id) {
         Customer customer = verifyCustomerExistence(c_id);
-        Item item = itemService.verifyItemExistence(i_id);
-        Order order = itemService.removeItem(item);
-        order.setTotalPrice(order.getTotalPrice() - item.getItemPrice());
-        return orderService.saveOrder(order);
+        return orderService.removeItemFromOrder(i_id, customer);
+    }
+
+    public OrderResponse editItem(Long c_id, Long i_id, Item newItem) {
+        Customer customer = verifyCustomerExistence(c_id);
+        Order order = orderService.editItem(customer, i_id, newItem);
+        List<Item> items = getItemsByOrder(order);
+        return OrderResponse.toResponse(order, items);
     }
 }

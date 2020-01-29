@@ -25,15 +25,18 @@ public class ItemService {
         this.productService = productService;
     }
 
-    public Item addItemToOrder(Order order, Item item) {
+    public void addItemToOrder(Order order, Item item) {
         item.setOrder(order);
         itemRepository.save(item);
         productService.leaveItem(item.getProduct().getId(), item.getQuantity());
-        return item;
     }
 
     public List<Item> getItemsByOrder(Order order) {
         return itemRepository.findByOrderId(order.getId());
+    }
+
+    public Item getItemById(Long id){
+        return verifyItemExistence(id);
     }
 
     public Item verifyItemExistence(Long id){
@@ -44,9 +47,18 @@ public class ItemService {
             return item.get();
     }
 
-    public Order removeItem(Item item) {
+    public Item removeItem(Long id) {
+        Item item = verifyItemExistence(id);
         itemRepository.delete(item);
         productService.returnItem(item.getProduct().getId(), item.getQuantity());
-        return item.getOrder();
+        return item;
+    }
+
+    public Item editItem(Item oldItem, Item newItem) {
+        oldItem.setQuantity(newItem.getQuantity());
+        oldItem.setProduct(newItem.getProduct());
+        oldItem.setItemPrice(newItem.getItemPrice());
+        itemRepository.save(oldItem);
+        return oldItem;
     }
 }

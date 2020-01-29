@@ -49,7 +49,19 @@ public class OrderService {
         return newOrder;
     }
 
-    public Order saveOrder(Order order) {
+    public Order removeItemFromOrder(Long i_id, Customer customer) {
+        Order order = hasOpenedOrder(customer);
+        Item item = itemService.removeItem(i_id);
+        order.setTotalPrice(order.getTotalPrice() - item.getItemPrice());
+        orderRepository.save(order);
+        return order;
+    }
+
+    public Order editItem(Customer customer, Long i_id, Item newItem) {
+        Order order = hasOpenedOrder(customer);
+        Item oldItem = itemService.getItemById(i_id);
+        itemService.editItem(oldItem, newItem);
+        order.setTotalPrice(order.getTotalPrice() - oldItem.getItemPrice() + newItem.getItemPrice());
         orderRepository.save(order);
         return order;
     }
