@@ -9,10 +9,10 @@ public class Item {
     @Column(name = "item_id")
     private Long id;
     private Integer quantity;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
     private double itemPrice;

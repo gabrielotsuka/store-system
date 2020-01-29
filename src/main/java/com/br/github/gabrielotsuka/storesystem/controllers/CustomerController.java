@@ -44,11 +44,11 @@ public class CustomerController {
         return new ResponseEntity<>(OrderResponse.toResponse(order, items), HttpStatus.OK);
     }
 
-//    @DeleteMapping(value = "{customer_id}/removeItem/{item_id}")
-//    public ResponseEntity<OrderResponse> removeItemFromOrder(@PathVariable(value = "customer_id") Long c_id,
-//                                                             @PathVariable(value = "item_id") Long i_id){
-//        Order order = customerService.removeItemFromOrder(c_id, i_id);
-//        List<Item> items = customerService.getItemsByOrder(order);
-//        return new ResponseEntity<>(OrderResponse.toResponse(order, items), HttpStatus.OK);
-//    }
+    @DeleteMapping(value = "{customer_id}/removeItem/{item_id}")
+    public ResponseEntity<OrderResponse> removeItemFromOrder(@PathVariable(value = "customer_id") Long c_id,
+                                                             @PathVariable(value = "item_id") Long i_id){
+        Order order = customerService.removeItemFromOrder(c_id, i_id);
+        List<Item> items = customerService.getItemsByOrder(order);
+        return new ResponseEntity<>(OrderResponse.toResponse(order, items), HttpStatus.OK);
+    }
 }

@@ -44,7 +44,14 @@ public class OrderService {
         for (Order order : orders)
             if(order.getStatus().equals("Opened"))
                 return order;
-        return new Order(customer);
+        Order newOrder = new Order(customer);
+        orderRepository.save(newOrder);
+        return newOrder;
+    }
+
+    public Order saveOrder(Order order) {
+        orderRepository.save(order);
+        return order;
     }
 
 //    public Order calculateTotalPrice(Long id) {

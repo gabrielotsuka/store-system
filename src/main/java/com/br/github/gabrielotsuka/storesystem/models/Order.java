@@ -11,7 +11,7 @@ public class Order {
     private Long id;
     private double totalPrice = 0.0;
     private String status = "Opened";
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 

@@ -1,16 +1,18 @@
 package com.br.github.gabrielotsuka.storesystem.controllers;
 
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.SaveCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.EditAdminRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.SaveAdminRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.SaveCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.product.ProductSavingRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.AdminResponse;
-import com.br.github.gabrielotsuka.storesystem.models.Customer;
+import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
+import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import com.br.github.gabrielotsuka.storesystem.models.Admin;
+import com.br.github.gabrielotsuka.storesystem.models.Customer;
+import com.br.github.gabrielotsuka.storesystem.models.Order;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,12 @@ public class AdminController {
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable(value = "id") Long id){
         Customer response = adminService.getCustomerById(id);
         return new ResponseEntity<>(CustomerResponse.toResponse(response), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/customer/{id}/getOrders   ")
+    public ResponseEntity<List<OrderResponse>> getCustomerOrders (@PathVariable(value = "id") Long id){
+        List<Order> orders = adminService.getCustomerOrders(id);
+        return new ResponseEntity<>(adminService.getItemsByListOrder(orders), HttpStatus.OK);
     }
 
     @PutMapping(value = "/customer/{id}")

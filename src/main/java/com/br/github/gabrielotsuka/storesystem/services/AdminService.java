@@ -3,14 +3,17 @@ package com.br.github.gabrielotsuka.storesystem.services;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Admin;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
+import com.br.github.gabrielotsuka.storesystem.models.Order;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,6 +93,14 @@ public class AdminService {
 
     public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
         return customerService.editCustomer(id, newCustomer);
+    }
+
+    public List<Order> getCustomerOrders(Long id) {
+        return customerService.getCustomerOrders(id);
+    }
+
+    public List<OrderResponse> getItemsByListOrder(List<Order> orders) {
+        return customerService.getItemsByListOrder(orders);
     }
 
     public Customer changeCustomerPwd(Long id, PasswordCustomerRequest newPwd) {

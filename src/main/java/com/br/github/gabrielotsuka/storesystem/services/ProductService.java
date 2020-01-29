@@ -48,6 +48,20 @@ public class ProductService {
         return oldProd;
     }
 
+    public Product leaveItem(Long id, Integer quantity){
+        Product oldProd = verifyProductExistence(id);
+        oldProd.setQuantity(oldProd.getQuantity() - quantity);
+        productRepository.save(oldProd);
+        return oldProd;
+    }
+
+    public Product returnItem(Long id, Integer quantity){
+        Product oldProd = verifyProductExistence(id);
+        oldProd.setQuantity(oldProd.getQuantity() + quantity);
+        productRepository.save(oldProd);
+        return oldProd;
+    }
+
     public void deleteProduct(Long id) {
         Product prod = verifyProductExistence(id);
         productRepository.delete(prod);

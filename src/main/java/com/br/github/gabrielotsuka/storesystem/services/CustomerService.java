@@ -3,7 +3,6 @@ package com.br.github.gabrielotsuka.storesystem.services;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.item.ItemRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.response.ItemResponse;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,10 +110,11 @@ public class CustomerService {
         return response;
     }
 
-//    public Order removeItemFromOrder(Long c_id, Long i_id) {
-//        Item item = itemService.verifyItemExistence(i_id);
-//        itemService.removeItem(item);
-//        Order order = item.getOrder();
-//        return order;
-//    }
+    public Order removeItemFromOrder(Long c_id, Long i_id) {
+        Customer customer = verifyCustomerExistence(c_id);
+        Item item = itemService.verifyItemExistence(i_id);
+        Order order = itemService.removeItem(item);
+        order.setTotalPrice(order.getTotalPrice() - item.getItemPrice());
+        return orderService.saveOrder(order);
+    }
 }
