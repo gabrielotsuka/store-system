@@ -3,6 +3,8 @@ package com.br.github.gabrielotsuka.storesystem.services;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.item.ItemRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.response.ItemResponse;
+import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import com.br.github.gabrielotsuka.storesystem.models.Item;
@@ -12,6 +14,8 @@ import com.br.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +28,14 @@ public class CustomerService {
     private final OrderService orderService;
     @Autowired
     private final ProductService productService;
+    @Autowired
+    private final ItemService itemService;
 
-    public CustomerService(CustomerRepository customerRepository, OrderService orderService, ProductService productService) {
+    public CustomerService(CustomerRepository customerRepository, OrderService orderService, ProductService productService, ItemService itemService) {
         this.customerRepository = customerRepository;
         this.orderService = orderService;
         this.productService = productService;
+        this.itemService = itemService;
     }
 
     private Customer verifyCustomerExistence(Long id){
@@ -94,4 +101,21 @@ public class CustomerService {
         Integer quantity = request.getQuantity();
         return new Item(prod, quantity, quantity * prod.getPrice());
     }
+
+    public List<Item> getItemsByOrder(Order order) {
+        return itemService.getItemsByOrder(order);
+    }
+
+    public List<OrderResponse> getItemsByListOrder(List<Order> orders) {
+        List<OrderResponse> response = new ArrayList<>();
+        orders.forEach(temp -> response.add(OrderResponse.toResponse(temp, getItemsByOrder(temp))));
+        return response;
+    }
+
+//    public Order removeItemFromOrder(Long c_id, Long i_id) {
+//        Item item = itemService.verifyItemExistence(i_id);
+//        itemService.removeItem(item);
+//        Order order = item.getOrder();
+//        return order;
+//    }
 }

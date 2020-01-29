@@ -3,6 +3,7 @@ package com.br.github.gabrielotsuka.storesystem.controllers;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.item.ItemRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import com.br.github.gabrielotsuka.storesystem.models.Item;
+import com.br.github.gabrielotsuka.storesystem.models.Order;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,24 @@ public class CustomerController {
 
     @GetMapping(value = "/{id}/getOrders")
     public ResponseEntity<List<OrderResponse>> getCustomerOrders(@PathVariable(value = "id") Long id){
-        return new ResponseEntity<>(OrderResponse.toListResponse(customerService.getCustomerOrders(id)), HttpStatus.OK);
+        List<Order> orders = customerService.getCustomerOrders(id);
+        return new ResponseEntity<>(customerService.getItemsByListOrder(orders), HttpStatus.OK);
     }
 
     @PostMapping(value = "/{id}/addItem")
     public ResponseEntity<OrderResponse> addItemToOrder(@PathVariable Long id,
                                                         @RequestBody @Valid ItemRequest request){
         Item item = customerService.setItem(request);
-        return new ResponseEntity<>(OrderResponse.toResponse(customerService.addItemToOrder(id, item)),
-                HttpStatus.OK);
+        Order order = customerService.addItemToOrder(id, item);
+        List<Item> items = customerService.getItemsByOrder(order);
+        return new ResponseEntity<>(OrderResponse.toResponse(order, items), HttpStatus.OK);
     }
+
+//    @DeleteMapping(value = "{customer_id}/removeItem/{item_id}")
+//    public ResponseEntity<OrderResponse> removeItemFromOrder(@PathVariable(value = "customer_id") Long c_id,
+//                                                             @PathVariable(value = "item_id") Long i_id){
+//        Order order = customerService.removeItemFromOrder(c_id, i_id);
+//        List<Item> items = customerService.getItemsByOrder(order);
+//        return new ResponseEntity<>(OrderResponse.toResponse(order, items), HttpStatus.OK);
+//    }
 }

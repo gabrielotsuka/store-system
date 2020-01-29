@@ -46,4 +46,12 @@ public class OrderService {
                 return order;
         return new Order(customer);
     }
+
+//    public Order calculateTotalPrice(Long id) {
+//        List<Item> items = itemService.getItemsByOrder(order);
+//        double price = items.stream().mapToDouble(Item::getItemPrice).sum();
+//        order.setTotalPrice(price);
+//        orderRepository.save(order);
+//        return order;
+//    }
 }

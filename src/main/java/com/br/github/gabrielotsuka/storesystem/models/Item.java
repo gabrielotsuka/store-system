@@ -17,6 +17,9 @@ public class Item {
     private Order order;
     private double itemPrice;
 
+    public Item() {
+    }
+
     public Item(Product product, Integer quantity) {
         this.setProduct(product);
         this.setQuantity(quantity);
