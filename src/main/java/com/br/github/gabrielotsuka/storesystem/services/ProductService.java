@@ -1,5 +1,6 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
+import com.br.github.gabrielotsuka.storesystem.error.NotEnoughProductsException;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Product;
 import com.br.github.gabrielotsuka.storesystem.repositories.ProductRepository;
@@ -50,16 +51,19 @@ public class ProductService {
 
     public Product leaveItem(Long id, Integer quantity){
         Product oldProd = verifyProductExistence(id);
-        oldProd.setQuantity(oldProd.getQuantity() - quantity);
+        Integer finalQtt = oldProd.getQuantity() - quantity;
+        if (finalQtt < 0)
+            throw new NotEnoughProductsException("This quantity of product is not available. Product ID: " + id);
+
+        oldProd.setQuantity(finalQtt);
         productRepository.save(oldProd);
         return oldProd;
     }
 
-    public Product returnItem(Long id, Integer quantity){
+    public void returnItem(Long id, Integer quantity){
         Product oldProd = verifyProductExistence(id);
         oldProd.setQuantity(oldProd.getQuantity() + quantity);
         productRepository.save(oldProd);
-        return oldProd;
     }
 
     public void deleteProduct(Long id) {

@@ -1,9 +1,6 @@
 package com.br.github.gabrielotsuka.storesystem.handler;
 
-import com.br.github.gabrielotsuka.storesystem.error.ConstraintViolationExceptionDetails;
-import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundDetails;
-import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
-import com.br.github.gabrielotsuka.storesystem.error.ValidationErrorDetails;
+import com.br.github.gabrielotsuka.storesystem.error.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,5 +49,16 @@ public class RestExceptionHandler {
                 .status(error422.value())
                 .build();
         return new ResponseEntity<>(cveDetails, error422);
+    }
+
+    @ExceptionHandler(NotEnoughProductsException.class)
+    public ResponseEntity<?> handleNotEnoughProductsException (NotEnoughProductsException nepException){
+        HttpStatus error422 = HttpStatus.UNPROCESSABLE_ENTITY;
+        NotEnoughProductsDetails nepDetails = NotEnoughProductsDetails.Builder
+                .newBuilder()
+                .title("Not enough products in stock")
+                .status(error422.value())
+                .build();
+        return new ResponseEntity<>(nepDetails, error422);
     }
 }
