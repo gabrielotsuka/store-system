@@ -126,4 +126,10 @@ public class CustomerService {
         Order order = orderService.cleanOpenedOrder(customer);
         return order;
     }
+
+    public Order buyOrder(Long id) {
+        Customer customer = verifyCustomerExistence(id);
+        Order order = orderService.buyOrder(customer);
+        return order;
+    }
 }

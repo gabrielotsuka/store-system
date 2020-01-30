@@ -21,11 +21,11 @@ public class OrderService {
         this.itemService = itemService;
     }
 
-    private void verifyOrderExistence(Long id){
-        List<Order> orders = new ArrayList<>();
-        orders = orderRepository.findByCustomerId(id);
-        System.out.println(orders);
-    }
+//    private void verifyOrderExistence(Long id){
+//        List<Order> orders = new ArrayList<>();
+//        orders = orderRepository.findByCustomerId(id);
+//        System.out.println(orders);
+//    }
 
     public List<Order> getCustomerOrders(Long id) {
         return orderRepository.findByCustomerId(id);
@@ -71,6 +71,13 @@ public class OrderService {
         Order order = hasOpenedOrder(customer);
         itemService.removeAllItems(order);
         order.setTotalPrice(0);
+        orderRepository.save(order);
+        return order;
+    }
+
+    public Order buyOrder(Customer customer) {
+        Order order = hasOpenedOrder(customer);
+        order.setStatus("Closed");
         orderRepository.save(order);
         return order;
     }

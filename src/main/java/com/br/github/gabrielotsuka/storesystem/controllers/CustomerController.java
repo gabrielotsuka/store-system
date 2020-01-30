@@ -65,4 +65,11 @@ public class CustomerController {
         Order order = customerService.cleanOpenedOrder(id);
         return new ResponseEntity<>(OrderResponse.toResponse(order, new ArrayList<>()), HttpStatus.OK);
     }
+
+    @PutMapping(value = "/{id}/buyOrder")
+    public ResponseEntity<OrderResponse> buyOrder(@PathVariable Long id){
+        Order order = customerService.buyOrder(id);
+        List<Item> items = customerService.getItemsByOrder(order);
+        return new ResponseEntity<>(OrderResponse.toResponse(order, items), HttpStatus.OK);
+    }
 }
