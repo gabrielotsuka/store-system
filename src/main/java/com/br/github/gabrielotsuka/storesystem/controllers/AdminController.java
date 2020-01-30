@@ -53,7 +53,7 @@ public class AdminController {
         return new ResponseEntity<>(CustomerResponse.toResponse(response), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/customer/{id}/getOrders   ")
+    @GetMapping(value = "/customer/{id}/getOrders")
     public ResponseEntity<List<OrderResponse>> getCustomerOrders (@PathVariable(value = "id") Long id){
         List<Order> orders = adminService.getCustomerOrders(id);
         return new ResponseEntity<>(adminService.getItemsByListOrder(orders), HttpStatus.OK);

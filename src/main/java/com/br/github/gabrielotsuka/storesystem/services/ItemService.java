@@ -55,10 +55,17 @@ public class ItemService {
     }
 
     public Item editItem(Item oldItem, Item newItem) {
+        productService.returnItem(oldItem.getId(), oldItem.getQuantity());
         oldItem.setQuantity(newItem.getQuantity());
         oldItem.setProduct(newItem.getProduct());
         oldItem.setItemPrice(newItem.getItemPrice());
+        productService.leaveItem(oldItem.getId(), newItem.getQuantity());
         itemRepository.save(oldItem);
         return oldItem;
+    }
+
+    public void removeAllItems(Order order) {
+        List<Item> items = getItemsByOrder(order);
+        items.forEach(item -> removeItem(item.getId()));
     }
 }

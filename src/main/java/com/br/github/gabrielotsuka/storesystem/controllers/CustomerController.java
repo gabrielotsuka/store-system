@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -51,11 +52,17 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.editItem(c_id, i_id, customerService.setItem(request)), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "{customer_id}/removeItem/{item_id}")
+    @DeleteMapping(value = "/{customer_id}/removeItem/{item_id}")
     public ResponseEntity<OrderResponse> removeItemFromOrder(@PathVariable(value = "customer_id") Long c_id,
                                                              @PathVariable(value = "item_id") Long i_id){
         Order order = customerService.removeItemFromOrder(c_id, i_id);
         List<Item> items = customerService.getItemsByOrder(order);
         return new ResponseEntity<>(OrderResponse.toResponse(order, items), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{id}/cleanOpenedOrder")
+    public ResponseEntity<OrderResponse> cleanOpenedOrder(@PathVariable Long id){
+        Order order = customerService.cleanOpenedOrder(id);
+        return new ResponseEntity<>(OrderResponse.toResponse(order, new ArrayList<>()), HttpStatus.OK);
     }
 }

@@ -120,4 +120,10 @@ public class CustomerService {
         List<Item> items = getItemsByOrder(order);
         return OrderResponse.toResponse(order, items);
     }
+
+    public Order cleanOpenedOrder(Long id) {
+        Customer customer = verifyCustomerExistence(id);
+        Order order = orderService.cleanOpenedOrder(customer);
+        return order;
+    }
 }

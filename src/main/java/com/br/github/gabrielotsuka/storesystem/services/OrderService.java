@@ -60,17 +60,18 @@ public class OrderService {
     public Order editItem(Customer customer, Long i_id, Item newItem) {
         Order order = hasOpenedOrder(customer);
         Item oldItem = itemService.getItemById(i_id);
-        itemService.editItem(oldItem, newItem);
-        order.setTotalPrice(order.getTotalPrice() - oldItem.getItemPrice() + newItem.getItemPrice());
+        order.setTotalPrice(order.getTotalPrice() - oldItem.getItemPrice());
+        oldItem = itemService.editItem(oldItem, newItem);
+        order.setTotalPrice(order.getTotalPrice() + oldItem.getItemPrice());
         orderRepository.save(order);
         return order;
     }
 
-//    public Order calculateTotalPrice(Long id) {
-//        List<Item> items = itemService.getItemsByOrder(order);
-//        double price = items.stream().mapToDouble(Item::getItemPrice).sum();
-//        order.setTotalPrice(price);
-//        orderRepository.save(order);
-//        return order;
-//    }
+    public Order cleanOpenedOrder(Customer customer) {
+        Order order = hasOpenedOrder(customer);
+        itemService.removeAllItems(order);
+        order.setTotalPrice(0);
+        orderRepository.save(order);
+        return order;
+    }
 }
