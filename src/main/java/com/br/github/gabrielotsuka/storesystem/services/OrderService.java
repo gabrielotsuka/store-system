@@ -1,13 +1,16 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
+import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import com.br.github.gabrielotsuka.storesystem.models.Item;
 import com.br.github.gabrielotsuka.storesystem.models.Order;
 import com.br.github.gabrielotsuka.storesystem.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -21,16 +24,21 @@ public class OrderService {
         this.itemService = itemService;
     }
 
-//    private void verifyOrderExistence(Long id){
-//        List<Order> orders = new ArrayList<>();
-//        orders = orderRepository.findByCustomerId(id);
-//        System.out.println(orders);
-//    }
+    private Order verifyOrderExistence(Long id){
+        Optional<Order> order = orderRepository.findById(id);
+        if (!order.isPresent())
+            throw new ResourceNotFoundException("Order not found. ID: " + id);
+        else
+            return order.get();
+
+    }
 
     public List<Order> getCustomerOrders(Long id) {
         return orderRepository.findByCustomerId(id);
     }
 
+
+    @Transactional
     public Order addItemToOrder(Customer customer, Item item) {
         Order order = hasOpenedOrder(customer);
         itemService.addItemToOrder(order, item);
@@ -39,6 +47,7 @@ public class OrderService {
         return order;
     }
 
+    @Transactional
     private Order hasOpenedOrder(Customer customer){
         List<Order> orders = orderRepository.findByCustomerId(customer.getId());
         for (Order order : orders)
@@ -49,6 +58,7 @@ public class OrderService {
         return newOrder;
     }
 
+    @Transactional
     public Order removeItemFromOrder(Long i_id, Customer customer) {
         Order order = hasOpenedOrder(customer);
         Item item = itemService.removeItem(i_id);
@@ -57,6 +67,7 @@ public class OrderService {
         return order;
     }
 
+    @Transactional
     public Order editItem(Customer customer, Long i_id, Item newItem) {
         Order order = hasOpenedOrder(customer);
         Item oldItem = itemService.getItemById(i_id);
@@ -69,12 +80,20 @@ public class OrderService {
 
     public Order cleanOpenedOrder(Customer customer) {
         Order order = hasOpenedOrder(customer);
+        order = cleanOrderById(order.getId());
+        return order;
+    }
+
+    @Transactional
+    public Order cleanOrderById(Long orderId){
+        Order order = verifyOrderExistence(orderId);
         itemService.removeAllItems(order);
         order.setTotalPrice(0);
         orderRepository.save(order);
         return order;
     }
 
+    @Transactional
     public Order buyOrder(Customer customer) {
         Order order = hasOpenedOrder(customer);
         order.setStatus("Closed");

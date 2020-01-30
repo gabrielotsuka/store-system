@@ -1,8 +1,8 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
+import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
-import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Admin;
@@ -13,7 +13,7 @@ import com.br.github.gabrielotsuka.storesystem.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +43,7 @@ public class AdminService {
             return user.get();
     }
 
+    @Transactional
     public Admin saveAdmin(Admin admin){
         adminRepository.save(admin);
         return admin;
@@ -58,6 +59,7 @@ public class AdminService {
         return admin;
     }
 
+    @Transactional
     public Admin editAdmin(Long id, Admin newAdmin){
         Admin admin = verifyAdminExistence(id);
         admin.setName(newAdmin.getName());
@@ -71,6 +73,7 @@ public class AdminService {
         adminRepository.delete(admin);
     }
 
+    @Transactional
     public Admin changeAdminPwd(Long id, PasswordAdminRequest newPwd) {
         Admin admin = verifyAdminExistence(id);
         admin.setPwd(newPwd.getPwd());

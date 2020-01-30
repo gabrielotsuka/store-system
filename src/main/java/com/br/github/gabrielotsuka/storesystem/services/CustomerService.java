@@ -13,6 +13,7 @@ import com.br.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,7 @@ public class CustomerService {
             return customer.get();
     }
 
+    @Transactional
     public Customer saveCustomer(Customer customer) {
         customerRepository.save(customer);
         return customer;
@@ -61,6 +63,7 @@ public class CustomerService {
         return verifyCustomerExistence(id);
     }
 
+    @Transactional
     public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
         Customer oldCustomer = verifyCustomerExistence(id);
         oldCustomer.setEmail(newCustomer.getEmail());
@@ -69,6 +72,7 @@ public class CustomerService {
         return oldCustomer;
     }
 
+    @Transactional
     public Customer changeCustomerPwd(Long id, PasswordCustomerRequest newPwd) {
         Customer customer = verifyCustomerExistence(id);
         customer.setPwd(newPwd.getPwd());
@@ -76,9 +80,12 @@ public class CustomerService {
         return customer;
     }
 
+    @Transactional
     public void deleteCustomer(Long id) {
         Customer customer = verifyCustomerExistence(id);
-        customerRepository.delete(customer);
+        customer.setEmail("INVALID_"+customer.getEmail());
+        orderService.cleanOpenedOrder(customer);
+        customerRepository.save(customer);
     }
 
     public List<Order> getCustomerOrders(Long id) {
@@ -86,6 +93,7 @@ public class CustomerService {
         return orderService.getCustomerOrders(id);
     }
 
+    @Transactional
     public Order addItemToOrder(Long id, Item item) {
         Customer customer = verifyCustomerExistence(id);
         Order order = orderService.addItemToOrder(customer, item);

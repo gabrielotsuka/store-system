@@ -8,6 +8,7 @@ import com.br.github.gabrielotsuka.storesystem.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class ItemService {
         this.productService = productService;
     }
 
+    @Transactional
     public void addItemToOrder(Order order, Item item) {
         item.setOrder(order);
         itemRepository.save(item);
@@ -47,6 +49,7 @@ public class ItemService {
             return item.get();
     }
 
+    @Transactional
     public Item removeItem(Long id) {
         Item item = verifyItemExistence(id);
         itemRepository.delete(item);
@@ -54,6 +57,7 @@ public class ItemService {
         return item;
     }
 
+    @Transactional
     public Item editItem(Item oldItem, Item newItem) {
         productService.returnItem(oldItem.getId(), oldItem.getQuantity());
         oldItem.setQuantity(newItem.getQuantity());

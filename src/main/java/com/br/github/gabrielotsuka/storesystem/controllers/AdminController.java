@@ -42,8 +42,7 @@ public class AdminController {
 
     @GetMapping(value = "/customer")
     public ResponseEntity<List<CustomerResponse>> getCustomers(){
-        return new ResponseEntity<>
-                (CustomerResponse.toListResponse(adminService.getCustomers()),
+        return new ResponseEntity<>(CustomerResponse.toListResponse(adminService.getCustomers()),
                         HttpStatus.OK);
     }
 
