@@ -94,7 +94,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order buyOrder(Customer customer) {
+    public Order closeOrder(Customer customer) {
         Order order = hasOpenedOrder(customer);
         order.setStatus("Closed");
         orderRepository.save(order);

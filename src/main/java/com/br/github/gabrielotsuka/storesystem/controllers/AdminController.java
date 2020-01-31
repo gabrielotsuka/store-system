@@ -7,6 +7,7 @@ import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.Edit
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.SaveCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.product.AddToProductRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.product.ChangeProdPriceRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.product.ProductSavingRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.AdminResponse;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
@@ -141,11 +142,17 @@ public class AdminController {
         return new ResponseEntity<>(adminService.editProduct(newProd.toProduct(), id), HttpStatus.OK);
     }
 
-//    SUM OR SUBTRACT TO TOTAL QUANTITY OF STOCK
+    //SUM OR SUBTRACT TO TOTAL QUANTITY OF STOCK
     @PutMapping(value = "/product/{id}/changeProdQtt")
     public ResponseEntity<Product> changeProductQuantity(@RequestBody @Valid AddToProductRequest request,
                                                 @PathVariable Long id){
         return new ResponseEntity<>(adminService.changeProductQuantity(id, request.toProduct()), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/product/{id}/changeProdPrice")
+    public ResponseEntity<Product> changeProductPrice(@RequestBody @Valid ChangeProdPriceRequest request,
+                                                      @PathVariable Long id){
+        return new ResponseEntity<>(adminService.changeProductPrice(id, request.toProduct()), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/product/{id}")

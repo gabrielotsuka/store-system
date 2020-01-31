@@ -140,4 +140,8 @@ public class AdminService {
     public Product changeProductQuantity(Long id, Product request) {
         return productService.changeProductQuantity(id, request);
     }
+
+    public Product changeProductPrice(Long id, Product request) {
+        return productService.changeProductPrice(id, request);
+    }
 }

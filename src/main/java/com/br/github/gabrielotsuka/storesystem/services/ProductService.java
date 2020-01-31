@@ -75,9 +75,17 @@ public class ProductService {
         productRepository.delete(prod);
     }
 
+    @Transactional
     public Product changeProductQuantity(Long id, Product request) {
         Product product = verifyProductExistence(id);
         product.setQuantity(product.getQuantity() + request.getQuantity());
+        productRepository.save(product);
+        return product;
+    }
+
+    public Product changeProductPrice(Long id, Product request) {
+        Product product = verifyProductExistence(id);
+        product.setPrice(request.getPrice());
         productRepository.save(product);
         return product;
     }

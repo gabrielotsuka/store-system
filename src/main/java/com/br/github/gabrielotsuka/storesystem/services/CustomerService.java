@@ -85,7 +85,7 @@ public class CustomerService {
         Customer customer = verifyCustomerExistence(id);
         customer.setEmail("INVALID_"+customer.getEmail());
         customer.setPwd("INVALID");
-        orderService.cleanOpenedOrder(customer);
+        orderService.closeOrder(customer);
         customerRepository.save(customer);
     }
 
@@ -138,7 +138,7 @@ public class CustomerService {
 
     public Order buyOrder(Long id) {
         Customer customer = verifyCustomerExistence(id);
-        Order order = orderService.buyOrder(customer);
+        Order order = orderService.closeOrder(customer);
         return order;
     }
 }

@@ -26,6 +26,10 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public Product(Double price) {
+        this.price = price;
+    }
+
     public Product() {
         super();
     }
