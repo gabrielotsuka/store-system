@@ -1,5 +1,6 @@
 package com.br.github.gabrielotsuka.storesystem.services;
 
+import com.br.github.gabrielotsuka.storesystem.error.ClosedOrderException;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Customer;
 import com.br.github.gabrielotsuka.storesystem.models.Item;
@@ -69,11 +70,13 @@ public class OrderService {
 
     @Transactional
     public Order editItem(Customer customer, Long i_id, Item newItem) {
-        Order order = hasOpenedOrder(customer);
         Item oldItem = itemService.getItemById(i_id);
+        Order order  = oldItem.getOrder();
+        isOpened(order);
         order.setTotalPrice(order.getTotalPrice() - oldItem.getItemPrice());
-        oldItem = itemService.editItem(oldItem, newItem);
+        itemService.editItem(oldItem, newItem);
         order.setTotalPrice(order.getTotalPrice() + oldItem.getItemPrice());
+
         orderRepository.save(order);
         return order;
     }
@@ -99,5 +102,10 @@ public class OrderService {
         order.setStatus("Closed");
         orderRepository.save(order);
         return order;
+    }
+
+    public void isOpened(Order order){
+        if (order.getStatus().equals("Closed"))
+            throw new ClosedOrderException(".");
     }
 }

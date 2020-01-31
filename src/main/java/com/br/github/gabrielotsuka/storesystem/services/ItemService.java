@@ -58,14 +58,13 @@ public class ItemService {
     }
 
     @Transactional
-    public Item editItem(Item oldItem, Item newItem) {
-        productService.returnItem(oldItem.getId(), oldItem.getQuantity());
+    public void editItem(Item oldItem, Item newItem) {
+        productService.returnItem(oldItem.getProduct().getId(), oldItem.getQuantity());
         oldItem.setQuantity(newItem.getQuantity());
         oldItem.setProduct(newItem.getProduct());
         oldItem.setItemPrice(newItem.getItemPrice());
-        productService.leaveItem(oldItem.getId(), newItem.getQuantity());
+        productService.leaveItem(oldItem.getProduct().getId(), newItem.getQuantity());
         itemRepository.save(oldItem);
-        return oldItem;
     }
 
     public void removeAllItems(Order order) {

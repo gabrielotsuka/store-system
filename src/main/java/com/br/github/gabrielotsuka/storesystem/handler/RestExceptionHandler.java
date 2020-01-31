@@ -1,6 +1,7 @@
 package com.br.github.gabrielotsuka.storesystem.handler;
 
 import com.br.github.gabrielotsuka.storesystem.error.*;
+import com.sun.xml.internal.ws.api.addressing.NonAnonymousResponseProcessor;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,5 +62,15 @@ public class RestExceptionHandler {
                 .status(error422.value())
                 .build();
         return new ResponseEntity<>(nepDetails, error422);
+    }
+
+    public ResponseEntity<?> handleClosedOrderException (ClosedOrderException coException){
+        HttpStatus error422 = HttpStatus.UNPROCESSABLE_ENTITY;
+        ClosedOrderDetails coDetails = ClosedOrderDetails.Builder
+                .newBuilder()
+                .title("Trying to manipulate closed order.")
+                .status(error422.value())
+                .build();
+        return new ResponseEntity<>(coDetails, error422);
     }
 }
