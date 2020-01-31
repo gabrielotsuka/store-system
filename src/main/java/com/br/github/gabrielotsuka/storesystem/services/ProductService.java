@@ -74,4 +74,11 @@ public class ProductService {
         Product prod = verifyProductExistence(id);
         productRepository.delete(prod);
     }
+
+    public Product changeProductQuantity(Long id, Product request) {
+        Product product = verifyProductExistence(id);
+        product.setQuantity(product.getQuantity() + request.getQuantity());
+        productRepository.save(product);
+        return product;
+    }
 }

@@ -22,6 +22,10 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public Product(int quantity) {
+        this.quantity = quantity;
+    }
+
     public Product() {
         super();
     }

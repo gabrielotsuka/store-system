@@ -47,8 +47,8 @@ public class CustomerController {
 
     @PutMapping(value = "/{customer_id}/editItem/{item_id}")
     public ResponseEntity<OrderResponse> editItem(@PathVariable(value = "customer_id") Long c_id,
-                                                         @PathVariable(value = "item_id") Long i_id,
-                                                         @RequestBody @Valid ItemRequest request){
+                                                  @PathVariable(value = "item_id") Long i_id,
+                                                  @RequestBody @Valid ItemRequest request){
         return new ResponseEntity<>(customerService.editItem(c_id, i_id, customerService.setItem(request)), HttpStatus.OK);
     }
 

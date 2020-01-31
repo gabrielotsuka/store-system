@@ -6,6 +6,7 @@ import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.SaveAdm
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.SaveCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.product.AddToProductRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.product.ProductSavingRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.AdminResponse;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.CustomerResponse;
@@ -21,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
@@ -135,8 +137,15 @@ public class AdminController {
 
     @PutMapping(value = "/product/{id}")
     public ResponseEntity<Product> editProduct(@RequestBody @Valid ProductSavingRequest newProd,
-                                               @PathVariable(value = "id") Long id){
+                                               @PathVariable Long id){
         return new ResponseEntity<>(adminService.editProduct(newProd.toProduct(), id), HttpStatus.OK);
+    }
+
+//    SUM OR SUBTRACT TO TOTAL QUANTITY OF STOCK
+    @PutMapping(value = "/product/{id}/changeProdQtt")
+    public ResponseEntity<Product> changeProductQuantity(@RequestBody @Valid AddToProductRequest request,
+                                                @PathVariable Long id){
+        return new ResponseEntity<>(adminService.changeProductQuantity(id, request.toProduct()), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/product/{id}")

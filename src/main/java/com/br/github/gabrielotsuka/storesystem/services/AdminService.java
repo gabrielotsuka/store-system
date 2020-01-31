@@ -3,6 +3,7 @@ package com.br.github.gabrielotsuka.storesystem.services;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
+import com.br.github.gabrielotsuka.storesystem.controllers.request.product.AddToProductRequest;
 import com.br.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import com.br.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import com.br.github.gabrielotsuka.storesystem.models.Admin;
@@ -136,4 +137,7 @@ public class AdminService {
         productService.deleteProduct(id);
     }
 
+    public Product changeProductQuantity(Long id, Product request) {
+        return productService.changeProductQuantity(id, request);
+    }
 }

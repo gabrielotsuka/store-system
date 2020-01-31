@@ -9,9 +9,9 @@ import javax.validation.constraints.NotBlank;
 public class ProductSavingRequest {
     @NotBlank
     private String name;
-    @DecimalMin("0.0")
+    @DecimalMin(value = "0.1", message = "Price must be greater than 0")
     private Double price;
-    @Range(min = 0)
+    @Range(min = 1, message = "Quantity must be greater than 0")
     private Integer quantity;
 
     public Product toProduct(){

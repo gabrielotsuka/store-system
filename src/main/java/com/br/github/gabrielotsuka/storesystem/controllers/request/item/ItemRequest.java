@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Range;
 
 public class ItemRequest {
     private Long productId;
-    @Range(min = 0)
+    @Range(min = 1)
     private Integer quantity;
 
     public Item toItem(Product product){

@@ -84,6 +84,7 @@ public class CustomerService {
     public void deleteCustomer(Long id) {
         Customer customer = verifyCustomerExistence(id);
         customer.setEmail("INVALID_"+customer.getEmail());
+        customer.setPwd("INVALID");
         orderService.cleanOpenedOrder(customer);
         customerRepository.save(customer);
     }
