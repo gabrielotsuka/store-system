@@ -2,15 +2,12 @@ package br.com.github.gabrielotsuka.storesystem.services;
 
 import br.com.github.gabrielotsuka.storesystem.models.Product;
 import br.com.github.gabrielotsuka.storesystem.repositories.ProductRepository;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @RunWith(SpringRunner.class)
 public class ProductServiceTest {
@@ -21,25 +18,16 @@ public class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     private Product product;
 
-//    @Before
-//    public void setUp(){
-//
-//    }
+    @Before
+    public void setup(){
+        product = new Product("batata", 1.50, 100);
+    }
 
     @Test
-    public void saveTest_blankName() throws MethodArgumentNotValidException {
-        //cenário
-        product = new Product(" ", 1.5, 100);
-        Mockito.when(productRepository.save(product)).thenThrow(MethodArgumentNotValidException.class);
+    public void leaveMoreProductsThanStockHas(){
 
-        //ação
-        productService.saveProduct(product);
-
-        //verificação
     }
+
 }

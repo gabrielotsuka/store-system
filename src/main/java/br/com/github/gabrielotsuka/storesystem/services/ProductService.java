@@ -53,14 +53,13 @@ public class ProductService {
     }
 
     @Transactional
-    public Product leaveItem(Long id, Integer quantity){
+    public void leaveItem(Long id, Integer quantity){
         Product oldProd = verifyProductExistence(id);
-        Integer finalQtt = oldProd.getQuantity() - quantity;
+        int finalQtt = oldProd.getQuantity() - quantity;
         if (finalQtt < 0)
             throw new NotEnoughProductsException("This quantity of product is not available. Product ID: " + id);
         oldProd.setQuantity(finalQtt);
         productRepository.save(oldProd);
-        return oldProd;
     }
 
     @Transactional
