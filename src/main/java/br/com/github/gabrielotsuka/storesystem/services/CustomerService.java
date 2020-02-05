@@ -21,15 +21,12 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    @Autowired
     private final CustomerRepository customerRepository;
-    @Autowired
     private final OrderService orderService;
-    @Autowired
     private final ProductService productService;
-    @Autowired
     private final ItemService itemService;
 
+    @Autowired
     public CustomerService(CustomerRepository customerRepository, OrderService orderService, ProductService productService, ItemService itemService) {
         this.customerRepository = customerRepository;
         this.orderService = orderService;

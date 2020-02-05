@@ -13,9 +13,10 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    @Autowired
+
     private final ProductRepository productRepository;
 
+    @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -30,8 +31,7 @@ public class ProductService {
 
     @Transactional
     public Product saveProduct(Product product){
-        productRepository.save(product);
-        return product;
+        return productRepository.save(product);
     }
 
     public List<Product> getProducts(){
@@ -53,13 +53,14 @@ public class ProductService {
     }
 
     @Transactional
-    public void leaveItem(Long id, Integer quantity){
+    public Product leaveItem(Long id, Integer quantity){
         Product oldProd = verifyProductExistence(id);
         int finalQtt = oldProd.getQuantity() - quantity;
         if (finalQtt < 0)
             throw new NotEnoughProductsException("This quantity of product is not available. Product ID: " + id);
         oldProd.setQuantity(finalQtt);
         productRepository.save(oldProd);
+        return oldProd;
     }
 
     @Transactional

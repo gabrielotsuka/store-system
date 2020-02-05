@@ -19,13 +19,11 @@ import java.util.Optional;
 
 @Service
 public class AdminService {
-    @Autowired
     private final CustomerService customerService;
-    @Autowired
     private final AdminRepository adminRepository;
-    @Autowired
     private final ProductService productService;
 
+    @Autowired
     public AdminService(CustomerService customerService,
                         AdminRepository adminRepository,
                         ProductService productService) {

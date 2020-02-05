@@ -14,11 +14,10 @@ import java.util.Optional;
 
 @Service
 public class ItemService {
-    @Autowired
     private final ItemRepository itemRepository;
-    @Autowired
     private final ProductService productService;
 
+    @Autowired
     public ItemService(ItemRepository itemRepository,
                        ProductRepository productRepository,
                        ProductService productService) {

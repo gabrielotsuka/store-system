@@ -15,11 +15,10 @@ import java.util.Optional;
 
 @Service
 public class OrderService {
-    @Autowired
     private final OrderRepository orderRepository;
-    @Autowired
     private final ItemService itemService;
 
+    @Autowired
     public OrderService(OrderRepository orderRepository, ItemService itemService) {
         this.orderRepository = orderRepository;
         this.itemService = itemService;

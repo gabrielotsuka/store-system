@@ -1,6 +1,7 @@
 package br.com.github.gabrielotsuka.storesystem.models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(
@@ -64,5 +65,21 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return getQuantity() == product.getQuantity() &&
+                getId().equals(product.getId()) &&
+                getName().equals(product.getName()) &&
+                getPrice().equals(product.getPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getPrice(), getQuantity());
     }
 }
