@@ -70,7 +70,7 @@ public class AdminService {
     }
 
     @Transactional
-    public Admin changeAdminPwd(Long id, PasswordAdminRequest newPwd) {
+    public Admin changeAdminPwd(Long id, Admin newPwd) {
         Admin admin = verifyAdminExistence(id);
         admin.setPwd(newPwd.getPwd());
         adminRepository.save(admin);

@@ -115,7 +115,7 @@ public class AdminController {
     @PutMapping(value = "/admin/{id}/changePwd")
     public ResponseEntity<AdminResponse> changeAdminPwd(@PathVariable(value = "id") Long id,
                                                            @Valid @RequestBody PasswordAdminRequest newPwd){
-        Admin admin = adminService.changeAdminPwd(id, newPwd);
+        Admin admin = adminService.changeAdminPwd(id, newPwd.toAdmin());
         return new ResponseEntity<>(AdminResponse.toResponse(admin), HttpStatus.OK);
     }
 

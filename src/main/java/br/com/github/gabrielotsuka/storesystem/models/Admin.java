@@ -27,6 +27,10 @@ public class Admin {
         this.email = email;
     }
 
+    public Admin(String pwd) {
+        this.pwd = pwd;
+    }
+
     public Admin() {
         super();
     }

@@ -35,6 +35,7 @@ public class AdminServiceTest {
         admin.setId(1L);
     }
 
+//                                              Admin
 //    Save Admin
     @Test
     public void saveAdmin_success(){
@@ -54,7 +55,7 @@ public class AdminServiceTest {
     public void getAdminById_success(){
         when(adminRepository.findById(1L)).thenReturn(Optional.of(admin));
         Admin adminResponse = adminService.getAdminById(1L);
-        Assert.assertEquals("gabrielotsuka", adminResponse.getEmail());
+        Assert.assertEquals("gabrielotsuka@gmail.com", adminResponse.getEmail());
     }
 
     @Test(expected = ResourceNotFoundException.class)
@@ -94,6 +95,26 @@ public class AdminServiceTest {
         when(adminRepository.findById(1L)).thenReturn(Optional.of(admin));
         adminService.deleteAdmin(2L);
     }
+
+//    Change Admin Password
+    @Test
+    public void changeAdminPwd_success(){
+        Admin request = new Admin("123");
+        when(adminRepository.findById(1L)).thenReturn(Optional.of(admin));
+        Admin adminResponse = adminService.changeAdminPwd(1L, request);
+        Assert.assertEquals("123", adminResponse.getPwd());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void changeAdminPwd_adminDoesNotExist(){
+        Admin request = new Admin("123");
+        when(adminRepository.findById(1L)).thenReturn(Optional.of(admin));
+        Admin adminResponse = adminService.changeAdminPwd(2L, request);
+    }
+
+    
+
+//
 
 
 }
