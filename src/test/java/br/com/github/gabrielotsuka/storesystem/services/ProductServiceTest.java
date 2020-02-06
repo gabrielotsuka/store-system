@@ -57,14 +57,14 @@ public class ProductServiceTest {
     @Test
     public void returnItem_success(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        productService.returnItem(product.getId(), 50);
-        Assert.assertEquals(75, product.getQuantity());
+        Product productResponse = productService.returnItem(product.getId(), 50);
+        Assert.assertEquals(75, productResponse.getQuantity());
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void returnItem_productDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        productService.returnItem((long) 2, 50);
+        Product productResponse = productService.returnItem((long) 2, 50);
     }
 
 //    Get Product By id
@@ -81,6 +81,23 @@ public class ProductServiceTest {
         Product productResponse = productService.getProductById((long) 2);
     }
 
-    
+//    Edit Product
+    @Test
+    public void editProduct_success(){
+        Product newProd = new Product("baotata", 2.0, 50);
+        newProd.setId((long) 1);
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product productResponse = productService.editProduct(newProd, product.getId());
+        Assert.assertEquals(productResponse.getId(), product.getId());
+        Assert.assertEquals("baotata", productResponse.getName());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void editProduct_productDoesNotExist(){
+        Product newProd = new Product("baotata", 2.0, 50);
+        newProd.setId((long) 1);
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product productResponse = productService.editProduct(newProd, (long) 2);
+    }
 
 }

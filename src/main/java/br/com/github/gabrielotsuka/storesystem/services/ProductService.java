@@ -67,7 +67,8 @@ public class ProductService {
     public Product returnItem(Long id, Integer quantity){
         Product oldProd = verifyProductExistence(id);
         oldProd.setQuantity(oldProd.getQuantity() + quantity);
-        return productRepository.save(oldProd);
+        productRepository.save(oldProd);
+        return oldProd;
     }
 
     @Transactional
