@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class ProductServiceTest {
@@ -105,13 +105,14 @@ public class ProductServiceTest {
     public void deleteProduct_success(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         productService.deleteProduct(product.getId());
-//        productService.getProductById(product.getId());
+        verify(productRepository, times(1)).delete(product);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void deleteProduct_ProductDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         productService.deleteProduct(2L);
+        verify(productRepository, times(1)).delete(product);
     }
 
 //    Change Product Quantity
@@ -133,7 +134,19 @@ public class ProductServiceTest {
         Product productResponse = productService.changeProductQuantity(2L, request);
     }
 
-    
+//    Change Product Price
+    @Test
+    public void changeProductPrice_success(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product request = new Product(0.1);
+        Product productResponse = productService.changeProductPrice(product.getId(),request);
+        Assert.assertEquals(0.1, productResponse.getPrice(), 0.1);
+    }
 
-
+    @Test(expected = ResourceNotFoundException.class)
+    public void changeProductPrice_productDoesNotExist(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product request = new Product(0.1);
+        Product productResponse = productService.changeProductPrice(2L,request);
+    }
 }
