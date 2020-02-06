@@ -114,4 +114,26 @@ public class ProductServiceTest {
         productService.deleteProduct(2L);
     }
 
+//    Change Product Quantity
+    @Test
+    public void changeProductQuantity_success(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product request = new Product(5);
+        Product productResponse = productService.changeProductQuantity(product.getId(), request);
+        Assert.assertEquals(30, productResponse.getQuantity());
+        request.setQuantity(-10);
+        productResponse = productService.changeProductQuantity(product.getId(), request);
+        Assert.assertEquals(20, productResponse.getQuantity());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void changeProductQuantity_productDoesNotExist(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product request = new Product(5);
+        Product productResponse = productService.changeProductQuantity(2L, request);
+    }
+
+    
+
+
 }
