@@ -37,20 +37,20 @@ public class ProductServiceTest {
     @Test
     public void leaveItem_success(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        productService.leaveItem(product.getId(), 23);
-        Assert.assertEquals(2, product.getQuantity());
+        Product productResponse  = productService.leaveItem(product.getId(), 23);
+        Assert.assertEquals(2, productResponse.getQuantity());
     }
 
     @Test(expected = NotEnoughProductsException.class)
     public void leaveItem_notEnoughStock(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        productService.leaveItem(product.getId(), 28);
+        Product productResponse = productService.leaveItem(product.getId(), 28);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void leaveItem_productDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        when(productService.leaveItem((long) 2, 22)).thenReturn(product);
+        Product productResponse = productService.leaveItem((long) 2, 22);
     }
 
 //    Return Item Function
@@ -66,4 +66,21 @@ public class ProductServiceTest {
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         productService.returnItem((long) 2, 50);
     }
+
+//    Get Product By id
+    @Test
+    public void getProductById_success(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product productResponse = productService.getProductById(product.getId());
+        Assert.assertEquals(25, productResponse.getQuantity());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void getProductById_productDoesNotExist(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        Product productResponse = productService.getProductById((long) 2);
+    }
+
+    
+
 }
