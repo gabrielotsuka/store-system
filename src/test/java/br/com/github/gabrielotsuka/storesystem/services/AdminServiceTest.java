@@ -2,6 +2,7 @@ package br.com.github.gabrielotsuka.storesystem.services;
 
 import br.com.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import br.com.github.gabrielotsuka.storesystem.models.Admin;
+import br.com.github.gabrielotsuka.storesystem.models.Customer;
 import br.com.github.gabrielotsuka.storesystem.repositories.AdminRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,11 +29,14 @@ public class AdminServiceTest {
     private ProductService productService;
 
     private Admin admin;
+    private Customer customer;
     @Before
     public void setup(){
         adminService = new AdminService(customerService, adminRepository, productService);
         admin = new Admin("Gabriel Otsuka", "gabrielotsuka@gmail.com", "abcde");
         admin.setId(1L);
+        customer = new Customer("Gabriel Otsuka", "gabrielotsuka@gmail.com", "abcde");
+        customer.setId(1L);
     }
 
 //                                              Admin
@@ -109,12 +113,15 @@ public class AdminServiceTest {
     public void changeAdminPwd_adminDoesNotExist(){
         Admin request = new Admin("123");
         when(adminRepository.findById(1L)).thenReturn(Optional.of(admin));
-        Admin adminResponse = adminService.changeAdminPwd(2L, request);
+        adminService.changeAdminPwd(2L, request);
     }
 
-    
+//                                                  Customer
+//    Save Customer
+    @Test
+    public void saveCustomer_success(){
+        adminService.saveCustomer(customer);
 
-//
-
+    }
 
 }
