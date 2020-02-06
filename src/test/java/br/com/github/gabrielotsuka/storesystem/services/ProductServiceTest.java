@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
@@ -22,12 +22,12 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
+    @InjectMocks
     private ProductService productService;
-    private Product product;
 
+    private Product product;
     @Before
     public void setup(){
-        MockitoAnnotations.initMocks(this);
         productService = new ProductService(productRepository);
         product = new Product("batata", 1.5, 25);
         product.setId((long) 1);
@@ -36,23 +36,34 @@ public class ProductServiceTest {
 //    Leave Item Function
     @Test
     public void leaveItem_success(){
-        when(productService.saveProduct(product)).thenReturn(product);
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        when(productService.leaveItem(product.getId(), 23)).thenReturn(product);
+        productService.leaveItem(product.getId(), 23);
         Assert.assertEquals(2, product.getQuantity());
     }
 
     @Test(expected = NotEnoughProductsException.class)
     public void leaveItem_notEnoughStock(){
-        when(productService.saveProduct(product)).thenReturn(product);
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        when(productService.leaveItem(product.getId(), 28)).thenReturn(product);
+        productService.leaveItem(product.getId(), 28);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void leaveItem_productDoesNotExist(){
-        when(productService.saveProduct(product)).thenReturn(product);
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        when(productService.leaveItem((long) 2, 28)).thenReturn(product);
+        when(productService.leaveItem((long) 2, 22)).thenReturn(product);
+    }
+
+//    Return Item Function
+    @Test
+    public void returnItem_success(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        productService.returnItem(product.getId(), 50);
+        Assert.assertEquals(75, product.getQuantity());
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void returnItem_productDoesNotExist(){
+        when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        productService.returnItem((long) 2, 50);
     }
 }

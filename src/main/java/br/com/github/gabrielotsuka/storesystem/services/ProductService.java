@@ -64,10 +64,10 @@ public class ProductService {
     }
 
     @Transactional
-    public void returnItem(Long id, Integer quantity){
+    public Product returnItem(Long id, Integer quantity){
         Product oldProd = verifyProductExistence(id);
         oldProd.setQuantity(oldProd.getQuantity() + quantity);
-        productRepository.save(oldProd);
+        return productRepository.save(oldProd);
     }
 
     @Transactional
