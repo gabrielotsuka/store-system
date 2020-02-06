@@ -48,13 +48,11 @@ public class AdminService {
     }
 
     public List<Admin> getAdmins(){
-        List<Admin> arr = adminRepository.findAll();
-        return arr;
+        return adminRepository.findAll();
     }
 
     public Admin getAdminById(Long id){
-        Admin admin = verifyAdminExistence(id);
-        return admin;
+        return verifyAdminExistence(id);
     }
 
     @Transactional

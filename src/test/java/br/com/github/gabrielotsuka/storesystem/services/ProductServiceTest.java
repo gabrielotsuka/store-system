@@ -33,6 +33,21 @@ public class ProductServiceTest {
         product.setId( 1L );
     }
 
+//    Save Product
+    @Test
+    public void saveProduct_success(){
+        productService.saveProduct(product);
+        verify(productRepository, times(1)).save(product);
+    }
+
+//    Get All Products
+    @Test
+    public void getProducts_success(){
+        productService.getProducts();
+        verify(productRepository, times(1)).findAll();
+    }
+
+
 //    Leave Item Function
     @Test
     public void leaveItem_success(){
@@ -44,13 +59,13 @@ public class ProductServiceTest {
     @Test(expected = NotEnoughProductsException.class)
     public void leaveItem_notEnoughStock(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        Product productResponse = productService.leaveItem(product.getId(), 28);
+        productService.leaveItem(product.getId(), 28);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void leaveItem_productDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        Product productResponse = productService.leaveItem( 2L, 22);
+        productService.leaveItem( 2L, 22);
     }
 
 //    Return Item Function
@@ -64,7 +79,7 @@ public class ProductServiceTest {
     @Test(expected = ResourceNotFoundException.class)
     public void returnItem_productDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        Product productResponse = productService.returnItem( 2L, 50);
+        productService.returnItem( 2L, 50);
     }
 
 //    Get Product By id
@@ -78,14 +93,13 @@ public class ProductServiceTest {
     @Test(expected = ResourceNotFoundException.class)
     public void getProductById_productDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        Product productResponse = productService.getProductById( 2L );
+        productService.getProductById( 2L );
     }
 
 //    Edit Product
     @Test
     public void editProduct_success(){
         Product newProd = new Product("baotata", 2.0, 50);
-        newProd.setId( 1L );
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         Product productResponse = productService.editProduct(newProd, product.getId());
         Assert.assertEquals(productResponse.getId(), product.getId());
@@ -95,9 +109,8 @@ public class ProductServiceTest {
     @Test(expected = ResourceNotFoundException.class)
     public void editProduct_productDoesNotExist(){
         Product newProd = new Product("baotata", 2.0, 50);
-        newProd.setId( 1L );
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        Product productResponse = productService.editProduct(newProd,  2L);
+        productService.editProduct(newProd,  2L);
     }
 
 //    Delete Product
@@ -131,7 +144,7 @@ public class ProductServiceTest {
     public void changeProductQuantity_productDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         Product request = new Product(5);
-        Product productResponse = productService.changeProductQuantity(2L, request);
+        productService.changeProductQuantity(2L, request);
     }
 
 //    Change Product Price
@@ -147,6 +160,6 @@ public class ProductServiceTest {
     public void changeProductPrice_productDoesNotExist(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         Product request = new Product(0.1);
-        Product productResponse = productService.changeProductPrice(2L,request);
+        productService.changeProductPrice(2L,request);
     }
 }
