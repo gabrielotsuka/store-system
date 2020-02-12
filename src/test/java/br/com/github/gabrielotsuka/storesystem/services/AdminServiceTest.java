@@ -3,7 +3,9 @@ package br.com.github.gabrielotsuka.storesystem.services;
 import br.com.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import br.com.github.gabrielotsuka.storesystem.models.Admin;
 import br.com.github.gabrielotsuka.storesystem.models.Customer;
+import br.com.github.gabrielotsuka.storesystem.models.Order;
 import br.com.github.gabrielotsuka.storesystem.repositories.AdminRepository;
+import br.com.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -27,6 +31,8 @@ public class AdminServiceTest {
     private CustomerService customerService;
     @Mock
     private ProductService productService;
+    @Mock
+    private CustomerRepository customerRepository;
 
     private Admin admin;
     private Customer customer;
@@ -117,11 +123,57 @@ public class AdminServiceTest {
     }
 
 //                                                  Customer
-//    Save Customer
+//    Tests if Admin Service calls successfully Customer Service, not if the answer is right.
+//    CustomerServiceTest tests if the answer is all right.
     @Test
     public void saveCustomer_success(){
         adminService.saveCustomer(customer);
-
+        verify(customerService, times(1)).saveCustomer(customer);
     }
 
+    @Test
+    public void getCustomers_success(){
+        adminService.getCustomers();
+        verify(customerService, times(1)).getCustomers();
+    }
+
+    @Test
+    public void getCustomerById_success(){
+        adminService.getCustomerById(1L);
+        verify(customerService, times(1)).getCustomerById(1L);
+    }
+
+    @Test
+    public void editCustomer_success(){
+        Customer newCustomer = new Customer("Gabriel Otsuka", "gabriel.otsuka@ufu.br", "abcd");
+        adminService.editCustomer(1L, newCustomer);
+        verify(customerService, times(1)).editCustomer(1L, newCustomer);
+    }
+
+    @Test
+    public void getCustomerOrders_success(){
+        adminService.getCustomerOrders(1L);
+        verify(customerService, times(1)).getCustomerOrders(1L);
+    }
+
+    @Test
+    public void getItemsByListOrder_success(){
+        List<Order> orders = new ArrayList<>();
+        adminService.getItemsByListOrder(orders);
+        verify(customerService, times(1)).getItemsByListOrder(orders);
+        verify(customerService,times(orders.size())).getItemsByOrder(any());
+    }
+
+    @Test
+    public void changeCustomerPwd_success(){
+        Customer request = new Customer("asdf");
+        adminService.changeCustomerPwd(1L, request);
+        verify(customerService, times(1)).changeCustomerPwd(1L, request);
+    }
+
+    @Test
+    public void deleteCustomer_success(){
+        adminService.deleteCustomer(1L);
+        verify(customerService, times(1)).deleteCustomer(1L);
+    }
 }

@@ -1,13 +1,10 @@
 package br.com.github.gabrielotsuka.storesystem.services;
 
-import br.com.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
-import br.com.github.gabrielotsuka.storesystem.models.Order;
-import br.com.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
-import br.com.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
 import br.com.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import br.com.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import br.com.github.gabrielotsuka.storesystem.models.Admin;
 import br.com.github.gabrielotsuka.storesystem.models.Customer;
+import br.com.github.gabrielotsuka.storesystem.models.Order;
 import br.com.github.gabrielotsuka.storesystem.models.Product;
 import br.com.github.gabrielotsuka.storesystem.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +87,7 @@ public class AdminService {
         return customerService.getCustomerById(id);
     }
 
-    public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
+    public Customer editCustomer(Long id, Customer newCustomer) {
         return customerService.editCustomer(id, newCustomer);
     }
 
@@ -102,7 +99,7 @@ public class AdminService {
         return customerService.getItemsByListOrder(orders);
     }
 
-    public Customer changeCustomerPwd(Long id, PasswordCustomerRequest newPwd) {
+    public Customer changeCustomerPwd(Long id, Customer newPwd) {
         return customerService.changeCustomerPwd(id, newPwd);
     }
 

@@ -61,7 +61,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer editCustomer(Long id, EditCustomerRequest newCustomer) {
+    public Customer editCustomer(Long id, Customer newCustomer) {
         Customer oldCustomer = verifyCustomerExistence(id);
         oldCustomer.setEmail(newCustomer.getEmail());
         oldCustomer.setName(newCustomer.getName());
@@ -70,7 +70,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer changeCustomerPwd(Long id, PasswordCustomerRequest newPwd) {
+    public Customer changeCustomerPwd(Long id, Customer newPwd) {
         Customer customer = verifyCustomerExistence(id);
         customer.setPwd(newPwd.getPwd());
         customerRepository.save(customer);

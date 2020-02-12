@@ -61,6 +61,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(nepDetails, error422);
     }
 
+    @ExceptionHandler({ClosedOrderException.class})
     public ResponseEntity<?> handleClosedOrderException (ClosedOrderException coException){
         HttpStatus error422 = HttpStatus.UNPROCESSABLE_ENTITY;
         ClosedOrderDetails coDetails = ClosedOrderDetails.Builder

@@ -1,7 +1,6 @@
 package br.com.github.gabrielotsuka.storesystem.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Table(
         name = "customer",
@@ -30,6 +29,10 @@ public class Customer {
 
     public Customer() {
         super();
+    }
+
+    public Customer(String pwd) {
+        this.pwd = pwd;
     }
 
     public Long getId() {

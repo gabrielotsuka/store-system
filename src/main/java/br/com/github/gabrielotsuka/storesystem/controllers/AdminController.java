@@ -1,12 +1,10 @@
 package br.com.github.gabrielotsuka.storesystem.controllers;
 
-import br.com.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
-import br.com.github.gabrielotsuka.storesystem.models.Order;
-import br.com.github.gabrielotsuka.storesystem.services.AdminService;
 import br.com.github.gabrielotsuka.storesystem.controllers.request.admin.EditAdminRequest;
 import br.com.github.gabrielotsuka.storesystem.controllers.request.admin.PasswordAdminRequest;
 import br.com.github.gabrielotsuka.storesystem.controllers.request.admin.SaveAdminRequest;
 import br.com.github.gabrielotsuka.storesystem.controllers.request.customer.EditCustomerRequest;
+import br.com.github.gabrielotsuka.storesystem.controllers.request.customer.PasswordCustomerRequest;
 import br.com.github.gabrielotsuka.storesystem.controllers.request.customer.SaveCustomerRequest;
 import br.com.github.gabrielotsuka.storesystem.controllers.request.product.AddToProductRequest;
 import br.com.github.gabrielotsuka.storesystem.controllers.request.product.ChangeProdPriceRequest;
@@ -16,7 +14,9 @@ import br.com.github.gabrielotsuka.storesystem.controllers.response.CustomerResp
 import br.com.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import br.com.github.gabrielotsuka.storesystem.models.Admin;
 import br.com.github.gabrielotsuka.storesystem.models.Customer;
+import br.com.github.gabrielotsuka.storesystem.models.Order;
 import br.com.github.gabrielotsuka.storesystem.models.Product;
+import br.com.github.gabrielotsuka.storesystem.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,14 +63,14 @@ public class AdminController {
     @PutMapping(value = "/customer/{id}")
     public ResponseEntity<CustomerResponse> editCustomer(@PathVariable(value = "id") Long id,
                                                          @RequestBody @Valid EditCustomerRequest newCustomer){
-        Customer response = adminService.editCustomer(id, newCustomer);
+        Customer response = adminService.editCustomer(id, newCustomer.toCustomer());
         return new ResponseEntity<>(CustomerResponse.toResponse(response), HttpStatus.OK);
     }
 
     @PutMapping(value = "/customer/{id}/changePwd")
     public ResponseEntity<CustomerResponse> changeCustomerPwd(@PathVariable(value = "id") Long id,
                                                               @RequestBody @Valid PasswordCustomerRequest newPwd){
-        Customer response = adminService.changeCustomerPwd(id, newPwd);
+        Customer response = adminService.changeCustomerPwd(id, newPwd.toCustomer());
         return new ResponseEntity<>(CustomerResponse.toResponse(response), HttpStatus.OK);
     }
 

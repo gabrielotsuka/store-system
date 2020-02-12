@@ -52,7 +52,7 @@ public class ProductServiceTest {
     @Test
     public void leaveItem_success(){
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
-        Product productResponse  = productService.leaveItem(product.getId(), 23);
+        Product productResponse = productService.leaveItem(product.getId(), 23);
         Assert.assertEquals(2, productResponse.getQuantity());
     }
 
