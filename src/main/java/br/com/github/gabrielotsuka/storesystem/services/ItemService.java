@@ -26,10 +26,11 @@ public class ItemService {
     }
 
     @Transactional
-    public void addItemToOrder(Order order, Item item) {
+    public Item addItemToOrder(Order order, Item item) {
         item.setOrder(order);
         itemRepository.save(item);
         productService.leaveItem(item.getProduct().getId(), item.getQuantity());
+        return item;
     }
 
     public List<Item> getItemsByOrder(Order order) {
@@ -40,7 +41,7 @@ public class ItemService {
         return verifyItemExistence(id);
     }
 
-    public Item verifyItemExistence(Long id){
+    private Item verifyItemExistence(Long id){
         Optional<Item> item = itemRepository.findById(id);
         if(!item.isPresent())
             throw new ResourceNotFoundException("Item not found. ID: " + id);
@@ -57,13 +58,14 @@ public class ItemService {
     }
 
     @Transactional
-    public void editItem(Item oldItem, Item newItem) {
+    public Item editItem(Item oldItem, Item newItem) {
         productService.returnItem(oldItem.getProduct().getId(), oldItem.getQuantity());
         oldItem.setQuantity(newItem.getQuantity());
         oldItem.setProduct(newItem.getProduct());
         oldItem.setItemPrice(newItem.getItemPrice());
         productService.leaveItem(oldItem.getProduct().getId(), newItem.getQuantity());
         itemRepository.save(oldItem);
+        return oldItem;
     }
 
     public void removeAllItems(Order order) {
