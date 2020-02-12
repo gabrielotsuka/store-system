@@ -4,6 +4,7 @@ import br.com.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import br.com.github.gabrielotsuka.storesystem.models.Admin;
 import br.com.github.gabrielotsuka.storesystem.models.Customer;
 import br.com.github.gabrielotsuka.storesystem.models.Order;
+import br.com.github.gabrielotsuka.storesystem.models.Product;
 import br.com.github.gabrielotsuka.storesystem.repositories.AdminRepository;
 import br.com.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
 import org.junit.Assert;
@@ -31,11 +32,10 @@ public class AdminServiceTest {
     private CustomerService customerService;
     @Mock
     private ProductService productService;
-    @Mock
-    private CustomerRepository customerRepository;
 
     private Admin admin;
     private Customer customer;
+    private Product product;
     @Before
     public void setup(){
         adminService = new AdminService(customerService, adminRepository, productService);
@@ -43,6 +43,8 @@ public class AdminServiceTest {
         admin.setId(1L);
         customer = new Customer("Gabriel Otsuka", "gabrielotsuka@gmail.com", "abcde");
         customer.setId(1L);
+        product = new Product("batata", 1.50, 50);
+        product.setId(1L);
     }
 
 //                                              Admin
@@ -175,5 +177,53 @@ public class AdminServiceTest {
     public void deleteCustomer_success(){
         adminService.deleteCustomer(1L);
         verify(customerService, times(1)).deleteCustomer(1L);
+    }
+
+//                                                  Product
+//    Tests if Admin Service calls successfully Product Service, not if the answer is right.
+//    ProductServiceTest tests if the answer is all right.
+    @Test
+    public void saveProduct_success(){
+        adminService.saveProduct(product);
+        verify(productService,times(1)).saveProduct(product);
+    }
+
+    @Test
+    public void  getProducts_success(){
+        adminService.getProducts();
+        verify(productService,times(1)).getProducts();
+    }
+
+    @Test
+    public void getProductById_success(){
+        adminService.getProductById(1L);
+        verify(productService,times(1)).getProductById(1L);
+    }
+
+    @Test
+    public void editProduct_success(){
+        Product newProd = new Product("pão", 0.5, 100);
+        adminService.editProduct(newProd, 1L);
+        verify(productService,times(1)).editProduct(newProd, 1L);
+    }
+
+    @Test
+    public void deleteProduct_success(){
+        adminService.deleteProduct(1l);
+        verify(productService,times(1)).deleteProduct(1l);
+    }
+
+    @Test
+    public void changeProductQuantity_success(){
+        Product request = new Product(50);
+        adminService.changeProductQuantity(1L, request);
+        verify(productService,times(1)).changeProductQuantity(1L, request);
+    }
+
+    @Test
+    public void changeProductPrice_success(){
+        Product request = new Product(1.5);
+        adminService.changeProductPrice(1L, request);
+        verify(productService, times(1)).changeProductPrice(1L, request);
     }
 }
