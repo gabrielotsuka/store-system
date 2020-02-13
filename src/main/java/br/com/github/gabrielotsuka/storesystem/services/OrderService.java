@@ -37,7 +37,6 @@ public class OrderService {
         return orderRepository.findByCustomerId(id);
     }
 
-
     @Transactional
     public Order addItemToOrder(Customer customer, Item item) {
         Order order = hasOpenedOrder(customer);
@@ -75,7 +74,6 @@ public class OrderService {
         order.setTotalPrice(order.getTotalPrice() - oldItem.getItemPrice());
         itemService.editItem(oldItem, newItem);
         order.setTotalPrice(order.getTotalPrice() + oldItem.getItemPrice());
-
         orderRepository.save(order);
         return order;
     }
