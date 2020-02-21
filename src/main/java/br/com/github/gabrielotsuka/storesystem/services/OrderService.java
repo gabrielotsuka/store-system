@@ -78,18 +78,18 @@ public class OrderService {
         return order;
     }
 
-    public Order cleanOpenedOrder(Customer customer) {
-        Order order = hasOpenedOrder(customer);
-        order = cleanOrderById(order.getId());
-        return order;
-    }
-
     @Transactional
     public Order cleanOrderById(Long orderId){
         Order order = verifyOrderExistence(orderId);
         itemService.removeAllItems(order);
         order.setTotalPrice(0);
         orderRepository.save(order);
+        return order;
+    }
+
+    public Order cleanOpenedOrder(Customer customer) {
+        Order order = hasOpenedOrder(customer);
+        order = cleanOrderById(order.getId());
         return order;
     }
 

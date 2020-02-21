@@ -1,6 +1,7 @@
 package br.com.github.gabrielotsuka.storesystem.services;
 
 import br.com.github.gabrielotsuka.storesystem.error.ClosedOrderException;
+import br.com.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import br.com.github.gabrielotsuka.storesystem.models.Customer;
 import br.com.github.gabrielotsuka.storesystem.models.Item;
 import br.com.github.gabrielotsuka.storesystem.models.Order;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -35,7 +37,7 @@ public class OrderServiceTest {
     private Order order;
 
     @Before
-    public void setup(){
+    public void setup() {
         customer = new Customer("Gabriel Otsuka", "gabrielotsuka@gmail.com", "abcd");
         customer.setId(1L);
         order = new Order();
@@ -48,16 +50,16 @@ public class OrderServiceTest {
         item.setId(1L);
     }
 
-//    Get Customer Orders
+    //    Get Customer Orders
     @Test
-    public void getCustomerOrders_success(){
+    public void getCustomerOrders_success() {
         orderService.getCustomerOrders(1L);
         verify(orderRepository, times(1)).findByCustomerId(1L);
     }
 
-//    Add Item To Order
+    //    Add Item To Order
     @Test
-    public void addItemToOrder_successWithOpenedOrder(){
+    public void addItemToOrder_successWithOpenedOrder() {
         List<Order> orders = new ArrayList<>();
         orders.add(order);
         when(orderRepository.findByCustomerId(customer.getId())).thenReturn(orders);
@@ -68,7 +70,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void addItemToOrder_successWithClosedOrder(){
+    public void addItemToOrder_successWithClosedOrder() {
         order.setStatus("Closed");
         Order response = orderService.addItemToOrder(customer, item);
         verify(itemService, times(1)).addItemToOrder(any(), any());
@@ -76,9 +78,9 @@ public class OrderServiceTest {
         Assert.assertEquals(5d, response.getTotalPrice(), 0.1);
     }
 
-//    Remove Item From Order
+    //    Remove Item From Order
     @Test
-    public void removeItemFromOrder_successWithOpenedOrder(){
+    public void removeItemFromOrder_successWithOpenedOrder() {
         order.setTotalPrice(10);
         List<Order> orders = new ArrayList<>();
         orders.add(order);
@@ -91,7 +93,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void removeItemFromOrder_successWithClosedOrder(){
+    public void removeItemFromOrder_successWithClosedOrder() {
         when(itemService.removeItem(1L)).thenReturn(item);
         Order response = orderService.removeItemFromOrder(item.getId(), customer);
         verify(itemService, times(1)).removeItem(any());
@@ -99,25 +101,59 @@ public class OrderServiceTest {
         Assert.assertEquals(-5.0, response.getTotalPrice(), 0.1);
     }
 
-//    Edit Item
-        @Test
-    public void  editItem_success(){
+    //    Edit Item
+    @Test
+    public void editItem_success() {
         Product prod1 = new Product("pão", 0.2, 50);
         prod1.setId(2L);
-        Item it1= new Item(prod1, 10, 2);
+        Item it1 = new Item(prod1, 10, 2);
         it1.setOrder(order);
         it1.setId(2L);
+        System.out.println(order.getTotalPrice());
         when(itemService.getItemById(any())).thenReturn(item);
-        orderService.editItem(customer, 1L, it1);
+        Order order1 = orderService.editItem(customer, 1L, it1);
 
     }
 
     @Test(expected = ClosedOrderException.class)
-    public void editItem_closedOrder(){
+    public void editItem_closedOrder() {
         order.setStatus("Closed");
         when(itemService.getItemById(any())).thenReturn(item);
         orderService.editItem(customer, 1L, item);
         verify(itemService, times(1)).editItem(any(), any());
         verify(orderRepository, times(1)).save(any());
+    }
+
+    //    Clean Order By Id
+    @Test(expected = ResourceNotFoundException.class)
+    public void cleanOrderById_orderDoesNotExist() {
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        orderService.cleanOrderById(2L);
+    }
+
+    @Test
+    public void cleanOrderById_success() {
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        orderService.cleanOrderById(1L);
+        verify(itemService, times(1)).removeAllItems(any());
+        verify(orderRepository, times(1)).save(any());
+    }
+
+    //    Clean Opened Order
+    @Test
+    public void cleanOpenedOrder_success() {
+        List<Order> orders = new ArrayList<>();
+        orders.add(order);
+        when(orderRepository.findByCustomerId(customer.getId())).thenReturn(orders);
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        orderService.cleanOpenedOrder(customer);
+    }
+
+    //    Close Opened Order
+    @Test
+    public void closeOrder_success() {
+        orderService.closeOrder(customer);
+        verify(orderRepository, times(2)).save(any());
     }
 }
