@@ -9,6 +9,15 @@ public class ItemRequest {
     @Range(min = 1)
     private Integer quantity;
 
+    public ItemRequest() {
+        super();
+    }
+
+    public ItemRequest(Long productId, @Range(min = 1) Integer quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
     public Item toItem(Product product){
         return new Item(product, quantity);
     }

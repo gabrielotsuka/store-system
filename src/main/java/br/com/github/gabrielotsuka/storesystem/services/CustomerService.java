@@ -78,12 +78,13 @@ public class CustomerService {
     }
 
     @Transactional
-    public void deleteCustomer(Long id) {
+    public Customer deleteCustomer(Long id) {
         Customer customer = verifyCustomerExistence(id);
         customer.setEmail("INVALID_"+customer.getEmail());
         customer.setPwd("INVALID");
         orderService.closeOrder(customer);
         customerRepository.save(customer);
+        return customer;
     }
 
     public List<Order> getCustomerOrders(Long id) {
@@ -129,13 +130,11 @@ public class CustomerService {
 
     public Order cleanOpenedOrder(Long id) {
         Customer customer = verifyCustomerExistence(id);
-        Order order = orderService.cleanOpenedOrder(customer);
-        return order;
+        return orderService.cleanOpenedOrder(customer);
     }
 
     public Order buyOrder(Long id) {
         Customer customer = verifyCustomerExistence(id);
-        Order order = orderService.closeOrder(customer);
-        return order;
+        return orderService.closeOrder(customer);
     }
 }
