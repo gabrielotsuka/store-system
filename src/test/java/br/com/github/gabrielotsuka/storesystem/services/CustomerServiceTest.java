@@ -1,15 +1,12 @@
 package br.com.github.gabrielotsuka.storesystem.services;
 
 import br.com.github.gabrielotsuka.storesystem.controllers.request.item.ItemRequest;
-import br.com.github.gabrielotsuka.storesystem.controllers.response.OrderResponse;
 import br.com.github.gabrielotsuka.storesystem.error.ResourceNotFoundException;
 import br.com.github.gabrielotsuka.storesystem.models.Customer;
 import br.com.github.gabrielotsuka.storesystem.models.Item;
 import br.com.github.gabrielotsuka.storesystem.models.Order;
 import br.com.github.gabrielotsuka.storesystem.models.Product;
 import br.com.github.gabrielotsuka.storesystem.repositories.CustomerRepository;
-import org.aspectj.weaver.ast.Or;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
