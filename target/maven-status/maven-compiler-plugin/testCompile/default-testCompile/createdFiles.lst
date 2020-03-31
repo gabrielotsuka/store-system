@@ -1,2 +1,5 @@
-br/com/github/gabrielotsuka/storesystem/services/ProductServiceTest.class
 br/com/github/gabrielotsuka/storesystem/services/AdminServiceTest.class
+br/com/github/gabrielotsuka/storesystem/services/CustomerServiceTest.class
+br/com/github/gabrielotsuka/storesystem/services/ItemServiceTest.class
+br/com/github/gabrielotsuka/storesystem/services/ProductServiceTest.class
+br/com/github/gabrielotsuka/storesystem/services/OrderServiceTest.class

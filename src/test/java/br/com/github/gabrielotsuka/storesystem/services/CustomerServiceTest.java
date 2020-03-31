@@ -123,7 +123,7 @@ public class CustomerServiceTest {
         Customer request = new Customer("abcde");
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         Customer response = customerService.changeCustomerPwd(1L, request);
-        assertEquals("abcde", request.getPwd());
+        assertEquals("abcde", response.getPwd());
     }
 
 //    Delete Customer
@@ -159,7 +159,6 @@ public class CustomerServiceTest {
 //    Add Item To Order
     @Test(expected = ResourceNotFoundException.class)
     public void addItemToOrder_customerDoesNotExist(){
-        Product prod = new Product();
         Item request = new Item();
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         customerService.addItemToOrder(2L, request);
@@ -207,14 +206,12 @@ public class CustomerServiceTest {
 //    Remove Item From Order
     @Test(expected = ResourceNotFoundException.class)
     public void removeItemFromOrder_CustomerDoesNotExist(){
-        Item request = new Item();
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         customerService.removeItemFromOrder(2L, 1L);
     }
 
     @Test
     public void removeItemFromOrder_success(){
-        Item request = new Item();
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         customerService.removeItemFromOrder(1L, 1L);
         verify(orderService, times(1)).removeItemFromOrder(any(), any());
