@@ -1,6 +1,6 @@
 br/com/github/gabrielotsuka/storesystem/services/ItemService.class
-br/com/github/gabrielotsuka/storesystem/error/ConstraintViolationExceptionDetails$Builder.class
 br/com/github/gabrielotsuka/storesystem/StoreSystemApplication.class
+br/com/github/gabrielotsuka/storesystem/error/ConstraintViolationExceptionDetails$Builder.class
 br/com/github/gabrielotsuka/storesystem/controllers/AdminController.class
 br/com/github/gabrielotsuka/storesystem/services/ProductService.class
 br/com/github/gabrielotsuka/storesystem/models/Item.class
@@ -23,13 +23,13 @@ br/com/github/gabrielotsuka/storesystem/error/ValidationErrorDetails$Builder.cla
 br/com/github/gabrielotsuka/storesystem/controllers/request/admin/EditAdminRequest.class
 br/com/github/gabrielotsuka/storesystem/repositories/ProductRepository.class
 br/com/github/gabrielotsuka/storesystem/models/Customer.class
-br/com/github/gabrielotsuka/storesystem/handler/RestExceptionHandler.class
 br/com/github/gabrielotsuka/storesystem/controllers/request/product/AddToProductRequest.class
+br/com/github/gabrielotsuka/storesystem/handler/RestExceptionHandler.class
 br/com/github/gabrielotsuka/storesystem/models/Order.class
 br/com/github/gabrielotsuka/storesystem/error/NotEnoughProductsException.class
 br/com/github/gabrielotsuka/storesystem/controllers/request/customer/SaveCustomerRequest.class
-br/com/github/gabrielotsuka/storesystem/error/ClosedOrderDetails$Builder.class
 br/com/github/gabrielotsuka/storesystem/error/NotEnoughProductsDetails.class
+br/com/github/gabrielotsuka/storesystem/error/ClosedOrderDetails$Builder.class
 br/com/github/gabrielotsuka/storesystem/repositories/CustomerRepository.class
 br/com/github/gabrielotsuka/storesystem/controllers/request/product/ChangeProdPriceRequest.class
 br/com/github/gabrielotsuka/storesystem/controllers/request/customer/PasswordCustomerRequest.class
